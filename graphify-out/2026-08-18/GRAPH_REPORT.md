@@ -1,16 +1,16 @@
 # Graph Report - amanah  (2026-08-18)
 
 ## Corpus Check
-- 25 files · ~11,190 words
+- 25 files · ~11,265 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 358 nodes · 338 edges · 46 communities (39 shown, 7 thin omitted)
+- 359 nodes · 339 edges · 46 communities (39 shown, 7 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `0ec64d8c`
+- Built from commit: `322d9780`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -82,7 +82,7 @@ Nodes (48): 10. Evidence Viewer, 11. AI Pipeline, 12. Structured Extraction, 13.
 
 ### Community 1 - "Amanah — Phased Product Development Plan.md"
 Cohesion: 0.06
-Nodes (35): Amanah — Phased Product Development Plan, Build, Critical Product Principle, Dataset, Definition of Done, Definition of Done, Definition of Done, Definition of Done (+27 more)
+Nodes (35): Amanah — Phased Product Development Plan, Build, Critical Product Principle, Dashboard, Definition of Done, Definition of Done, Definition of Done, Definition of Done (+27 more)
 
 ### Community 2 - "package.json"
 Cohesion: 0.10
@@ -109,8 +109,8 @@ Cohesion: 0.20
 Nodes (10): 46. Priority Order, P0, P0, P0, P0, P1, P1, P1 (+2 more)
 
 ### Community 8 - "amanah.ts"
-Cohesion: 0.13
-Nodes (17): event(), getState(), stamp(), state, useReviewWorkflow(), Campaign, CampaignDocument, CampaignStatus (+9 more)
+Cohesion: 0.12
+Nodes (18): event(), getState(), stamp(), state, useReviewWorkflow(), WorkflowState, Campaign, CampaignDocument (+10 more)
 
 ### Community 9 - "Final review"
 Cohesion: 0.25
@@ -170,7 +170,7 @@ Nodes (6): Build, Definition of Done, Objective, Phase 5 — Policy Knowledge Ba
 
 ### Community 23 - "Phase 7 — Human-in-the-Loop Workflow"
 Cohesion: 0.33
-Nodes (6): Build, Dashboard, Definition of Done, Important, Objective, Phase 10 — Review Queue Intelligence
+Nodes (6): Build, Definition of Done, Important behavior, Objective, Phase 7 — Human-in-the-Loop Workflow, Reviewer feedback
 
 ### Community 24 - "Phase 12 — Evaluation Framework"
 Cohesion: 0.40
@@ -178,7 +178,7 @@ Nodes (5): Architecture, Definition of Done, Deployment checklist, Environment v
 
 ### Community 25 - "Phase 9 — Re-review Workflow"
 Cohesion: 0.33
-Nodes (6): Definition of Done, Example, Objective, Phase 9 — Re-review Workflow, UI, Workflow
+Nodes (6): Dataset, Definition of Done, Example, Metrics, Objective, Phase 12 — Evaluation Framework
 
 ### Community 26 - "5. Prototype Scenario"
 Cohesion: 0.33
@@ -205,7 +205,7 @@ Cohesion: 0.50
 Nodes (3): { priority }, queue, stats
 
 ## Knowledge Gaps
-- **268 isolated node(s):** `nav`, `state`, `campaigns`, `policies`, `route` (+263 more)
+- **269 isolated node(s):** `nav`, `WorkflowState`, `state`, `campaigns`, `policies` (+264 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -218,8 +218,8 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.021) - this node is a cross-community bridge._
 - **Why does `Phase 1 — Operations Dashboard` connect `Phase 1 — Operations Dashboard` to `Amanah — Phased Product Development Plan.md`?**
   _High betweenness centrality (0.015) - this node is a cross-community bridge._
-- **What connects `nav`, `state`, `campaigns` to the rest of the system?**
-  _268 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `nav`, `WorkflowState`, `state` to the rest of the system?**
+  _269 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `LaunchGood Applied AI Engineer — AI Campaign Trust & Safety Review Copilot.md` be split into smaller, more focused modules?**
   _Cohesion score 0.04081632653061224 - nodes in this community are weakly interconnected._
 - **Should `Amanah — Phased Product Development Plan.md` be split into smaller, more focused modules?**

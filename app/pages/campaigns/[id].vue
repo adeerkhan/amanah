@@ -4,28 +4,367 @@ import type { RecommendedAction } from '~/types/amanah'
 const route = useRoute()
 const { getCampaign, retrievePolicies } = useCampaigns()
 const { runReview, decide, setNote, setFeedback, uploadEvidence, rereview, openFinding, getWorkflow } = useReviewWorkflow()
+
 const campaign = getCampaign(route.params.id as string)!
 if (!campaign) throw createError({ statusCode: 404, statusMessage: 'Campaign not found' })
+
 const workflow = getWorkflow(campaign.id)
 const selectedDocument = ref(campaign.documents[0]!)
 const selectedFindingId = ref(campaign.findings[0]?.id)
 const output = computed(() => workflow.output)
-const selectedFinding = computed(() => output.value?.findings.find(finding => finding.id === selectedFindingId.value) || campaign.findings.find(finding => finding.id === selectedFindingId.value))
+const selectedFinding = computed(() =>
+  output.value?.findings.find(f => f.id === selectedFindingId.value)
+  || campaign.findings.find(f => f.id === selectedFindingId.value)
+)
 const policies = computed(() => retrievePolicies(output.value?.findings || []))
-const actionLabel: Record<RecommendedAction, string> = { approve: 'Approve', request_information: 'Request information', escalate: 'Escalate', reject: 'Reject' }
+
+const actionLabel: Record<RecommendedAction, string> = {
+  approve: 'Approve',
+  request_information: 'Request information',
+  escalate: 'Escalate',
+  reject: 'Reject'
+}
+
 function run() { runReview(campaign) }
-function selectFinding(id: string) { selectedFindingId.value = id; const finding = output.value?.findings.find(item => item.id === id); if (finding) { openFinding(campaign, finding); const source = campaign.documents.find(document => document.name === finding.evidence[0]?.source); if (source) selectedDocument.value = source } }
+
+function selectFinding(id: string) {
+  selectedFindingId.value = id
+  const finding = output.value?.findings.find(f => f.id === id)
+  if (finding) {
+    openFinding(campaign, finding)
+    const source = campaign.documents.find(d => d.name === finding.evidence[0]?.source)
+    if (source) selectedDocument.value = source
+  }
+}
+
 function makeDecision(action: RecommendedAction) { decide(campaign, action) }
 </script>
+
 <template>
-  <div class="review-page">
-    <div class="review-top"><NuxtLink to="/campaigns" class="back-link">← Queue</NuxtLink><div class="review-top-actions"><NuxtLink :to="`/campaigns/${campaign.id}/activity`" class="secondary-btn">Activity <span>↗</span></NuxtLink><span class="case-id">CASE {{ campaign.id.toUpperCase() }}</span></div></div>
-    <section class="review-heading"><div><div class="heading-meta"><span class="pill" :class="`risk-${campaign.risk}`">{{ campaign.risk }} attention</span><span>{{ campaign.category }} / Submitted 2h ago</span></div><h1>{{ campaign.title }}</h1><p>{{ campaign.description }}</p></div><div class="review-run"><span v-if="output" class="completed-label"><i /> Review completed {{ output.completedAt }}</span><button class="primary-btn" @click="run">{{ output ? 'Run again' : 'Run AI review' }} <span>✦</span></button></div></section>
-    <div v-if="workflow.uploaded" class="rereview-banner"><span class="banner-icon">↻</span><div><strong>{{ workflow.rereviews ? `Re-review ${workflow.rereviews} complete` : 'New evidence is ready for re-review' }}</strong><small>beneficiary_relationship_letter.pdf was uploaded to this case</small></div><button v-if="!workflow.rereviews" class="primary-btn" @click="rereview(campaign)">Run re-review <span>→</span></button><span v-else class="resolved-label">Finding resolved ✓</span></div>
-    <div class="review-layout">
-      <aside class="case-sidebar"><section class="case-card panel"><p class="eyebrow">Case profile</p><div class="person-row"><span class="person-avatar">AR</span><div><strong>{{ campaign.creator }}</strong><small>Creator · {{ campaign.creatorCountry }}</small></div></div><dl class="case-facts"><div><dt>Beneficiary</dt><dd>{{ campaign.beneficiary }}</dd></div><div><dt>Relationship</dt><dd>{{ campaign.relationship }}</dd></div><div><dt>Goal</dt><dd>${{ campaign.goal.toLocaleString() }}</dd></div><div><dt>Raised</dt><dd>${{ campaign.raised.toLocaleString() }}</dd></div><div><dt>Account age</dt><dd>{{ campaign.accountAgeDays }} days</dd></div></dl></section><section class="case-card panel"><div class="card-title-row"><p class="eyebrow">Evidence dossier</p><span>{{ campaign.documents.length }}</span></div><button v-for="document in campaign.documents" :key="document.id" class="document-item" :class="selectedDocument.id === document.id ? 'selected' : ''" @click="selectedDocument = document"><span class="file-icon">{{ document.type === 'Medical evidence' ? '＋' : '▤' }}</span><span><strong>{{ document.name }}</strong><small>{{ document.type }}</small></span><i :class="`status-${document.status}`" /></button><label class="upload-link">＋ Upload new evidence<input type="file" hidden @change="uploadEvidence(campaign)"></label></section></aside>
-      <main class="review-center"><section class="ai-intro panel"><div class="ai-intro-top"><div class="ai-label"><span>✦</span><div><p class="eyebrow">Amanah analysis</p><h2>Evidence review</h2></div></div><div class="tool-tags"><span>Structured extraction</span><span>Entity comparison</span><span>Policy retrieval</span></div></div><div v-if="!output" class="empty-review"><div class="empty-orb">✦</div><h3>Ready to inspect this dossier</h3><p>Run the review to extract entities, compare supplied sources, and retrieve the relevant operating policy.</p><button class="primary-btn" @click="run">Analyze campaign <span>→</span></button></div><template v-else><div class="summary-block"><p class="eyebrow">Executive summary</p><p>{{ output.summary }}</p></div><div class="risk-strip"><div><small>Overall risk</small><strong :class="`risk-text-${output.riskLevel}`">{{ output.riskLevel }} <span>· {{ output.riskScore }}/100</span></strong></div><div class="risk-meter"><i :style="{ width: `${output.riskScore}%` }" :class="`meter-${output.riskLevel}`" /></div><div><small>Recommended action</small><strong>{{ actionLabel[output.recommendedAction] }}</strong></div></div></template></section><section v-if="output" class="findings-section"><div class="section-head compact"><div><p class="eyebrow">Cross-source reasoning</p><h2>Key findings <span>{{ output.findings.length }}</span></h2></div><span class="grounded"><i /> All findings grounded</span></div><article v-for="finding in output.findings" :key="finding.id" class="finding-card panel" :class="selectedFindingId === finding.id ? 'finding-selected' : ''" @click="selectFinding(finding.id)"><div class="finding-marker" :class="`marker-${finding.severity}`">{{ finding.severity === 'high' ? '!' : finding.severity === 'medium' ? '·' : '✓' }}</div><div class="finding-body"><div class="finding-title"><strong>{{ finding.title }}</strong><span class="pill" :class="`risk-${finding.severity}`">{{ finding.severity }} · {{ Math.round(finding.confidence * 100) }}%</span></div><p>{{ finding.explanation }}</p><div class="evidence-quotes"><span v-for="evidence in finding.evidence" :key="evidence.source"><b>{{ evidence.source }}</b> “{{ evidence.quote }}”</span></div><small class="recommendation">Recommendation: {{ finding.recommendation }}</small></div><span class="finding-chevron">›</span></article><div v-if="output.missingInformation.length" class="missing-box"><strong>Missing information</strong><span v-for="item in output.missingInformation" :key="item">{{ item }}</span></div></section><section v-if="output" class="evidence-preview panel"><div class="section-head compact"><div><p class="eyebrow">Source inspection</p><h2>{{ selectedDocument.name }}</h2></div><span class="pill" :class="selectedDocument.status === 'verified' ? 'risk-low' : 'risk-medium'">{{ selectedDocument.status }}</span></div><pre>{{ selectedDocument.content }}</pre><div v-if="selectedFinding" class="compare-row"><div><small>Finding selected</small><strong>{{ selectedFinding.title }}</strong></div><div><small>Source location</small><strong>{{ selectedFinding.evidence[0]?.location }}</strong></div></div></section></main>
-      <aside class="decision-sidebar"><section class="decision-card panel"><div class="decision-head"><p class="eyebrow">Human decision</p><span class="lock">⌁ Reviewer only</span></div><div class="decision-score"><small>AI risk score</small><strong v-if="output">{{ output.riskScore }}<em>/100</em></strong><strong v-else>—</strong><span v-if="output" class="pill" :class="`risk-${output.riskLevel}`">{{ output.riskLevel }} attention</span></div><div class="recommendation-box" v-if="output"><small>AI recommendation</small><strong>{{ actionLabel[output.recommendedAction] }}</strong><p>Based on {{ output.findings.length }} findings and retrieved policy guidance.</p></div><div class="decision-actions"><button v-for="action in (['approve', 'request_information', 'escalate', 'reject'] as RecommendedAction[])" :key="action" :class="['decision-btn', action === output?.recommendedAction ? 'suggested' : '', action === workflow.decision ? 'chosen' : '']" @click="makeDecision(action)">{{ actionLabel[action] }}<span v-if="action === output?.recommendedAction">Recommended</span></button></div><div v-if="workflow.decision" class="decision-record">✓ Decision recorded: <strong>{{ actionLabel[workflow.decision] }}</strong></div></section><section class="feedback-card panel"><p class="eyebrow">Reviewer feedback</p><select :value="workflow.feedback" aria-label="Feedback" @change="setFeedback(campaign, ($event.target as HTMLSelectElement).value)"><option value="">How was the AI review?</option><option>AI was useful</option><option>AI was too cautious</option><option>AI was too aggressive</option><option>AI missed something</option><option>Incorrect evidence</option><option>Incorrect recommendation</option></select><textarea :value="workflow.note" placeholder="Add a note for the review record..." @input="setNote(campaign, ($event.target as HTMLTextAreaElement).value)" /><p class="feedback-hint">Your feedback improves future review quality.</p></section><section v-if="policies.length" class="policy-card panel"><p class="eyebrow">Retrieved policy</p><div v-for="policy in policies.slice(0, 1)" :key="policy.id"><h3>{{ policy.title }}</h3><span>{{ policy.section }}</span><p>{{ policy.summary }}</p><details><summary>View policy guidance</summary><ul><li v-for="item in policy.guidance" :key="item">{{ item }}</li></ul></details></div></section></aside>
+  <div>
+    <!-- Top bar -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+      <NuxtLink to="/campaigns" style="font-size:12px;color:var(--c-text-secondary)">
+        ← Queue
+      </NuxtLink>
+      <div style="display:flex;align-items:center;gap:12px">
+        <NuxtLink :to="`/campaigns/${campaign.id}/activity`" class="btn btn-secondary" style="font-size:11px;padding:5px 10px">
+          Activity ↗
+        </NuxtLink>
+        <span style="font-size:10px;color:var(--c-text-tertiary);letter-spacing:.08em">CASE {{ campaign.id.toUpperCase() }}</span>
+      </div>
+    </div>
+
+    <!-- Heading -->
+    <div style="display:flex;justify-content:space-between;align-items:end;gap:20px;padding-bottom:24px;border-bottom:1px solid var(--c-border);margin-bottom:24px">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span class="pill" :class="`pill-${campaign.risk}`">{{ campaign.risk }} attention</span>
+          <span style="font-size:11px;color:var(--c-text-tertiary)">{{ campaign.category }} · Submitted 2h ago</span>
+        </div>
+        <h1 style="margin:0;font-size:clamp(24px,3vw,32px);font-weight:600;letter-spacing:-.04em;line-height:1.15">
+          {{ campaign.title }}
+        </h1>
+        <p style="margin:6px 0 0;color:var(--c-text-secondary);font-size:13px;max-width:600px">
+          {{ campaign.description }}
+        </p>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;flex-shrink:0">
+        <span v-if="output" style="font-size:11px;color:var(--c-success);display:flex;align-items:center;gap:5px">
+          <span class="topbar-dot" />
+          Review completed {{ output.completedAt }}
+        </span>
+        <button class="btn btn-primary" @click="run">
+          {{ output ? 'Run again' : 'Run AI review' }} ✦
+        </button>
+      </div>
+    </div>
+
+    <!-- Re-review banner -->
+    <div v-if="workflow.uploaded" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--c-success-light);background:var(--c-success-light);border-radius:var(--radius-md);margin-bottom:20px">
+      <span style="width:28px;height:28px;border-radius:50%;background:white;display:grid;place-items:center;color:var(--c-success);font-size:14px;flex-shrink:0">↻</span>
+      <div style="flex:1">
+        <strong style="font-size:12px;color:var(--c-success-dark)">{{ workflow.rereviews ? `Re-review ${workflow.rereviews} complete` : 'New evidence ready for re-review' }}</strong>
+        <small style="display:block;color:var(--c-text-secondary);font-size:11px">beneficiary_relationship_letter.pdf uploaded</small>
+      </div>
+      <button v-if="!workflow.rereviews" class="btn btn-primary" @click="rereview(campaign)">Run re-review →</button>
+      <span v-else style="font-size:11px;color:var(--c-success);font-weight:600">Finding resolved ✓</span>
+    </div>
+
+    <!-- Main 3-column layout -->
+    <div style="display:grid;grid-template-columns:210px minmax(0,1fr) 260px;gap:16px;align-items:start">
+      <!-- LEFT: Case info -->
+      <aside style="display:flex;flex-direction:column;gap:12px">
+        <div class="panel" style="padding:16px">
+          <p class="eyebrow" style="margin:0 0 12px">Case profile</p>
+          <div style="display:flex;gap:10px;align-items:center;margin-bottom:14px">
+            <span class="sidebar-avatar" style="width:32px;height:32px;font-size:10px">AR</span>
+            <div>
+              <strong style="display:block;font-size:12px">{{ campaign.creator }}</strong>
+              <small style="color:var(--c-text-tertiary);font-size:11px">Creator · {{ campaign.creatorCountry }}</small>
+            </div>
+          </div>
+          <dl style="margin:0;border-top:1px solid var(--c-border)">
+            <div
+              v-for="item in [
+                ['Beneficiary', campaign.beneficiary],
+                ['Relationship', campaign.relationship],
+                ['Goal', `$${campaign.goal.toLocaleString()}`],
+                ['Raised', `$${campaign.raised.toLocaleString()}`],
+                ['Account age', `${campaign.accountAgeDays} days`]
+              ]" :key="item[0]" style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--c-border)"
+            >
+              <dt style="margin:0;color:var(--c-text-tertiary);font-size:11px">{{ item[0] }}</dt>
+              <dd style="margin:0;color:var(--c-text);font-size:11px;font-weight:600">{{ item[1] }}</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="panel" style="padding:14px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <p class="eyebrow" style="margin:0">Evidence dossier</p>
+            <span style="font-size:10px;color:var(--c-text-tertiary)">{{ campaign.documents.length }}</span>
+          </div>
+          <button
+            v-for="doc in campaign.documents"
+            :key="doc.id"
+            style="display:flex;align-items:center;gap:8px;width:100%;padding:7px 6px;border:0;border-radius:var(--radius-sm);background:transparent;color:var(--c-text);text-align:left;cursor:pointer;transition:background .1s;font-size:11px"
+            :style="selectedDocument.id === doc.id ? { background: 'var(--c-surface-alt)', fontWeight: '600' } : {}"
+            @click="selectedDocument = doc"
+          >
+            <span
+              style="width:6px;height:6px;border-radius:50%;flex-shrink:0"
+              :style="{
+                background: doc.status === 'verified' ? 'var(--c-success)' : doc.status === 'unclear' ? 'var(--c-warning)' : 'var(--c-danger)'
+              }"
+            />
+            <span style="min-width:0">
+              <strong style="display:block;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ doc.name }}</strong>
+              <small style="color:var(--c-text-tertiary);font-size:10px">{{ doc.type }}</small>
+            </span>
+          </button>
+          <label style="display:block;margin-top:10px;padding:7px;border:1px dashed var(--c-border);border-radius:var(--radius-sm);text-align:center;font-size:11px;color:var(--c-accent);font-weight:600;cursor:pointer;transition:border-color .12s">
+            + Upload new evidence
+            <input type="file" hidden @change="uploadEvidence(campaign)">
+          </label>
+        </div>
+      </aside>
+
+      <!-- CENTER: Analysis -->
+      <main style="display:flex;flex-direction:column;gap:12px">
+        <!-- AI intro -->
+        <div class="panel" style="overflow:hidden">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--c-border)">
+            <div style="display:flex;gap:10px;align-items:center">
+              <span style="width:28px;height:28px;border-radius:var(--radius-sm);background:var(--c-accent-light);color:var(--c-accent);display:grid;place-items:center;font-size:13px">✦</span>
+              <div>
+                <p class="eyebrow" style="margin:0 0 2px">Amanah analysis</p>
+                <h2 style="margin:0;font-size:16px;font-weight:600">Evidence review</h2>
+              </div>
+            </div>
+            <div style="display:flex;gap:4px">
+              <span v-for="tag in ['Extraction', 'Comparison', 'Policy']" :key="tag" style="padding:4px 8px;background:var(--c-surface-alt);border-radius:4px;font-size:10px;color:var(--c-text-secondary)">
+                {{ tag }}
+              </span>
+            </div>
+          </div>
+
+          <div v-if="!output" style="padding:48px 24px;text-align:center">
+            <div style="width:44px;height:44px;border-radius:50%;background:var(--c-accent-light);color:var(--c-accent);display:grid;place-items:center;font-size:18px;margin:0 auto 14px">✦</div>
+            <h3 style="margin:0;font-size:16px">Ready to inspect this dossier</h3>
+            <p style="margin:8px 0 18px;color:var(--c-text-secondary);font-size:12px;max-width:340px;margin-left:auto;margin-right:auto">
+              Run the review to extract entities, compare sources, and retrieve the relevant operating policy.
+            </p>
+            <button class="btn btn-primary" @click="run">Analyze campaign →</button>
+          </div>
+
+          <template v-else>
+            <div style="padding:16px 18px">
+              <p class="eyebrow" style="margin:0 0 6px">Executive summary</p>
+              <p style="margin:0;color:var(--c-text-secondary);font-size:13px;line-height:1.6">{{ output.summary }}</p>
+            </div>
+            <div style="display:grid;grid-template-columns:80px 1fr 120px;gap:14px;align-items:center;padding:12px 18px;background:var(--c-surface-alt);border-top:1px solid var(--c-border);margin:0 18px 16px;border-radius:var(--radius-sm)">
+              <div>
+                <small style="display:block;color:var(--c-text-tertiary);font-size:10px;margin-bottom:3px">Overall risk</small>
+                <strong :style="{ color: output.riskLevel === 'high' ? 'var(--c-danger)' : output.riskLevel === 'medium' ? 'var(--c-warning)' : 'var(--c-success)' }" style="font-size:13px;text-transform:capitalize">
+                  {{ output.riskLevel }}
+                  <span style="color:var(--c-text-tertiary);font-weight:400">· {{ output.riskScore }}/100</span>
+                </strong>
+              </div>
+              <div style="height:4px;background:var(--c-border);border-radius:4px;overflow:hidden">
+                <div
+                  :style="{
+                    width: `${output.riskScore}%`,
+                    background: output.riskLevel === 'high' ? 'var(--c-danger)' : output.riskLevel === 'medium' ? 'var(--c-warning)' : 'var(--c-success)'
+                  }" style="height:100%;border-radius:4px;transition:width .3s"
+                />
+              </div>
+              <div>
+                <small style="display:block;color:var(--c-text-tertiary);font-size:10px;margin-bottom:3px">Recommended action</small>
+                <strong style="font-size:13px">{{ actionLabel[output.recommendedAction] }}</strong>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <!-- Findings -->
+        <div v-if="output" class="panel">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--c-border)">
+            <div>
+              <p class="eyebrow" style="margin:0 0 4px">Cross-source reasoning</p>
+              <h2 style="margin:0;font-size:16px;font-weight:600">Key findings <span style="color:var(--c-text-tertiary);font-weight:400">{{ output.findings.length }}</span></h2>
+            </div>
+            <span style="font-size:11px;color:var(--c-success);display:flex;align-items:center;gap:5px">
+              <span class="topbar-dot" style="width:5px;height:5px" />
+              All grounded
+            </span>
+          </div>
+
+          <article
+            v-for="finding in output.findings"
+            :key="finding.id"
+            style="display:flex;gap:12px;padding:14px 18px;border-bottom:1px solid var(--c-border);cursor:pointer;transition:background .1s"
+            :style="selectedFindingId === finding.id ? { background: 'var(--c-surface-alt)' } : {}"
+            @click="selectFinding(finding.id)"
+          >
+            <span
+              style="width:24px;height:24px;border-radius:var(--radius-sm);display:grid;place-items:center;flex-shrink:0;font-size:11px;font-weight:700"
+              :style="{
+                background: finding.severity === 'high' ? 'var(--c-danger-light)' : finding.severity === 'medium' ? 'var(--c-warning-light)' : 'var(--c-success-light)',
+                color: finding.severity === 'high' ? 'var(--c-danger)' : finding.severity === 'medium' ? 'var(--c-warning)' : 'var(--c-success)'
+              }"
+            >{{ finding.severity === 'high' ? '!' : finding.severity === 'medium' ? '·' : '✓' }}</span>
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px">
+                <strong style="font-size:13px">{{ finding.title }}</strong>
+                <span class="pill" :class="`pill-${finding.severity}`">{{ finding.severity }} · {{ Math.round(finding.confidence * 100) }}%</span>
+              </div>
+              <p style="margin:0 0 8px;color:var(--c-text-secondary);font-size:12px;line-height:1.55">{{ finding.explanation }}</p>
+              <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px">
+                <span v-for="e in finding.evidence" :key="e.source" style="padding:5px 8px;background:var(--c-surface-alt);border-radius:4px;font-size:10px;color:var(--c-text-secondary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:260px">
+                  <strong style="color:var(--c-accent-dark)">{{ e.source }}</strong> "{{ e.quote }}"
+                </span>
+              </div>
+              <small style="color:var(--c-success);font-size:10px;font-weight:500">Recommendation: {{ finding.recommendation }}</small>
+            </div>
+          </article>
+
+          <div v-if="output.missingInformation.length" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:12px 18px;background:var(--c-warning-light);font-size:11px">
+            <strong style="color:var(--c-warning-dark)">Missing information:</strong>
+            <span v-for="item in output.missingInformation" :key="item" style="padding:2px 6px;background:white;border-radius:4px;color:var(--c-warning-dark)">{{ item }}</span>
+          </div>
+        </div>
+
+        <!-- Source inspection -->
+        <div v-if="output" class="panel">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--c-border)">
+            <div>
+              <p class="eyebrow" style="margin:0 0 3px">Source inspection</p>
+              <h2 style="margin:0;font-size:14px;font-weight:600">{{ selectedDocument.name }}</h2>
+            </div>
+            <span class="pill" :class="selectedDocument.status === 'verified' ? 'pill-low' : 'pill-medium'">{{ selectedDocument.status }}</span>
+          </div>
+          <pre style="margin:0;padding:14px 18px;white-space:pre-wrap;font:12px/1.6 monospace;color:var(--c-text-secondary);background:var(--c-surface-alt)">{{ selectedDocument.content }}</pre>
+          <div v-if="selectedFinding" style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--c-border)">
+            <div style="padding:10px 18px;border-right:1px solid var(--c-border)">
+              <small style="display:block;color:var(--c-text-tertiary);font-size:10px;margin-bottom:3px">Finding selected</small>
+              <strong style="font-size:11px">{{ selectedFinding.title }}</strong>
+            </div>
+            <div style="padding:10px 18px">
+              <small style="display:block;color:var(--c-text-tertiary);font-size:10px;margin-bottom:3px">Source location</small>
+              <strong style="font-size:11px">{{ selectedFinding.evidence[0]?.location }}</strong>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- RIGHT: Decision -->
+      <aside style="display:flex;flex-direction:column;gap:12px">
+        <div class="panel" style="padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+            <p class="eyebrow" style="margin:0">Human decision</p>
+            <span style="font-size:9px;color:var(--c-text-tertiary)">Reviewr only</span>
+          </div>
+
+          <div style="padding-bottom:14px;border-bottom:1px solid var(--c-border);margin-bottom:14px">
+            <small style="display:block;color:var(--c-text-tertiary);font-size:10px;margin-bottom:4px">AI risk score</small>
+            <strong v-if="output" style="font-size:32px;letter-spacing:-.06em">
+              {{ output.riskScore }}<span style="font-size:14px;color:var(--c-text-tertiary);font-weight:400">/100</span>
+            </strong>
+            <strong v-else style="font-size:32px;color:var(--c-text-tertiary)">—</strong>
+          </div>
+
+          <div v-if="output" style="padding:10px;background:var(--c-success-light);border-left:2px solid var(--c-success);border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:14px">
+            <small style="display:block;color:var(--c-text-secondary);font-size:10px;margin-bottom:3px">AI recommendation</small>
+            <strong style="display:block;color:var(--c-success-dark);font-size:12px;margin-bottom:3px">{{ actionLabel[output.recommendedAction] }}</strong>
+            <p style="margin:0;color:var(--c-text-secondary);font-size:10px;line-height:1.5">Based on {{ output.findings.length }} findings and retrieved policy.</p>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <button
+              v-for="action in (['approve', 'request_information', 'escalate', 'reject'] as RecommendedAction[])"
+              :key="action"
+              style="display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border:1px solid var(--c-border);border-radius:var(--radius-sm);background:white;color:var(--c-text);font-size:11px;cursor:pointer;transition:all .12s"
+              :style="{
+                borderColor: action === output?.recommendedAction ? 'var(--c-accent)' : action === workflow.decision ? 'var(--c-success)' : undefined,
+                background: action === workflow.decision ? 'var(--c-success-light)' : undefined,
+                color: action === workflow.decision ? 'var(--c-success-dark)' : undefined
+              }"
+              @click="makeDecision(action)"
+            >
+              {{ actionLabel[action] }}
+              <span v-if="action === output?.recommendedAction" style="color:var(--c-accent);font-size:9px">Recommended</span>
+              <span v-else-if="action === workflow.decision" style="font-size:9px">Selected</span>
+            </button>
+          </div>
+
+          <div v-if="workflow.decision" style="margin-top:10px;padding:8px;background:var(--c-success-light);border-radius:var(--radius-sm);font-size:11px;color:var(--c-success-dark)">
+            ✓ Decision recorded: <strong>{{ actionLabel[workflow.decision] }}</strong>
+          </div>
+        </div>
+
+        <!-- Feedback -->
+        <div class="panel" style="padding:14px">
+          <p class="eyebrow" style="margin:0 0 10px">Reviewer feedback</p>
+          <select
+            :value="workflow.feedback"
+            aria-label="Feedback"
+            style="width:100%;padding:7px 8px;border:1px solid var(--c-border);border-radius:var(--radius-sm);font-size:11px;color:var(--c-text);background:white;margin-bottom:8px"
+            @change="setFeedback(campaign, ($event.target as HTMLSelectElement).value)"
+          >
+            <option value="">How was the AI review?</option>
+            <option>AI was useful</option>
+            <option>AI was too cautious</option>
+            <option>AI was too aggressive</option>
+            <option>AI missed something</option>
+            <option>Incorrect evidence</option>
+            <option>Incorrect recommendation</option>
+          </select>
+          <textarea
+            :value="workflow.note"
+            placeholder="Add a note…"
+            style="width:100%;min-height:60px;padding:7px 8px;border:1px solid var(--c-border);border-radius:var(--radius-sm);font-size:11px;resize:vertical;color:var(--c-text)"
+            @input="setNote(campaign, ($event.target as HTMLTextAreaElement).value)"
+          />
+          <p style="margin:6px 0 0;color:var(--c-text-tertiary);font-size:10px">Your feedback improves future review quality.</p>
+        </div>
+
+        <!-- Policy -->
+        <div v-if="policies.length" class="panel" style="padding:14px;border-top:2px solid var(--c-accent)">
+          <p class="eyebrow" style="margin:0 0 8px">Retrieved policy</p>
+          <div v-for="policy in policies.slice(0, 1)" :key="policy.id">
+            <h3 style="margin:0 0 2px;font-size:13px">{{ policy.title }}</h3>
+            <span style="color:var(--c-accent);font-size:10px;font-weight:600">{{ policy.section }}</span>
+            <p style="margin:8px 0;color:var(--c-text-secondary);font-size:11px;line-height:1.5">{{ policy.summary }}</p>
+            <details>
+              <summary style="color:var(--c-accent);font-size:10px;font-weight:600;cursor:pointer">View guidance</summary>
+              <ul style="margin:6px 0 0;padding-left:14px;color:var(--c-text-secondary);font-size:10px;line-height:1.6">
+                <li v-for="g in policy.guidance" :key="g">{{ g }}</li>
+              </ul>
+            </details>
+          </div>
+        </div>
+      </aside>
     </div>
   </div>
 </template>

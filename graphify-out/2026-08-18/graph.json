@@ -94,10 +94,20 @@
       "norm_label": "usereviewworkflow.ts"
     },
     {
-      "label": "state",
+      "label": "WorkflowState",
       "file_type": "code",
       "source_file": "app/composables/useReviewWorkflow.ts",
       "source_location": "L4",
+      "_origin": "ast",
+      "id": "app_composables_usereviewworkflow_workflowstate",
+      "community": 8,
+      "norm_label": "workflowstate"
+    },
+    {
+      "label": "state",
+      "file_type": "code",
+      "source_file": "app/composables/useReviewWorkflow.ts",
+      "source_location": "L5",
       "_origin": "ast",
       "id": "app_composables_usereviewworkflow_state",
       "community": 8,
@@ -107,7 +117,7 @@
       "label": "getState()",
       "file_type": "code",
       "source_file": "app/composables/useReviewWorkflow.ts",
-      "source_location": "L6",
+      "source_location": "L7",
       "_origin": "ast",
       "id": "app_composables_usereviewworkflow_getstate",
       "community": 8,
@@ -117,7 +127,7 @@
       "label": "stamp()",
       "file_type": "code",
       "source_file": "app/composables/useReviewWorkflow.ts",
-      "source_location": "L11",
+      "source_location": "L12",
       "_origin": "ast",
       "id": "app_composables_usereviewworkflow_stamp",
       "community": 8,
@@ -127,7 +137,7 @@
       "label": "event()",
       "file_type": "code",
       "source_file": "app/composables/useReviewWorkflow.ts",
-      "source_location": "L12",
+      "source_location": "L13",
       "_origin": "ast",
       "id": "app_composables_usereviewworkflow_event",
       "community": 8,
@@ -137,7 +147,7 @@
       "label": "useReviewWorkflow()",
       "file_type": "code",
       "source_file": "app/composables/useReviewWorkflow.ts",
-      "source_location": "L14",
+      "source_location": "L15",
       "_origin": "ast",
       "id": "app_composables_usereviewworkflow_usereviewworkflow",
       "community": 8,
@@ -1710,7 +1720,7 @@
       "source_location": "L567",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_phase_7_human_in_the_loop_workflow",
-      "community": 1,
+      "community": 23,
       "norm_label": "phase 7 \u2014 human-in-the-loop workflow"
     },
     {
@@ -1720,7 +1730,7 @@
       "source_location": "L569",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_objective_569",
-      "community": 1,
+      "community": 23,
       "norm_label": "objective"
     },
     {
@@ -1730,7 +1740,7 @@
       "source_location": "L575",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_build_575",
-      "community": 1,
+      "community": 23,
       "norm_label": "build"
     },
     {
@@ -1740,7 +1750,7 @@
       "source_location": "L594",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_reviewer_feedback",
-      "community": 1,
+      "community": 23,
       "norm_label": "reviewer feedback"
     },
     {
@@ -1750,7 +1760,7 @@
       "source_location": "L609",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_important_behavior",
-      "community": 1,
+      "community": 23,
       "norm_label": "important behavior"
     },
     {
@@ -1760,7 +1770,7 @@
       "source_location": "L622",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_definition_of_done_622",
-      "community": 1,
+      "community": 23,
       "norm_label": "definition of done"
     },
     {
@@ -1820,7 +1830,7 @@
       "source_location": "L687",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_phase_9_re_review_workflow",
-      "community": 25,
+      "community": 1,
       "norm_label": "phase 9 \u2014 re-review workflow"
     },
     {
@@ -1830,7 +1840,7 @@
       "source_location": "L689",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_objective_689",
-      "community": 25,
+      "community": 1,
       "norm_label": "objective"
     },
     {
@@ -1840,7 +1850,7 @@
       "source_location": "L695",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_workflow",
-      "community": 25,
+      "community": 1,
       "norm_label": "workflow"
     },
     {
@@ -1850,7 +1860,7 @@
       "source_location": "L711",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_example_711",
-      "community": 25,
+      "community": 1,
       "norm_label": "example"
     },
     {
@@ -1860,7 +1870,7 @@
       "source_location": "L729",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_ui_729",
-      "community": 25,
+      "community": 1,
       "norm_label": "ui"
     },
     {
@@ -1870,7 +1880,7 @@
       "source_location": "L740",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_definition_of_done_740",
-      "community": 25,
+      "community": 1,
       "norm_label": "definition of done"
     },
     {
@@ -1880,7 +1890,7 @@
       "source_location": "L746",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_phase_10_review_queue_intelligence",
-      "community": 23,
+      "community": 1,
       "norm_label": "phase 10 \u2014 review queue intelligence"
     },
     {
@@ -1890,7 +1900,7 @@
       "source_location": "L748",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_objective_748",
-      "community": 23,
+      "community": 1,
       "norm_label": "objective"
     },
     {
@@ -1900,7 +1910,7 @@
       "source_location": "L752",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_build_752",
-      "community": 23,
+      "community": 1,
       "norm_label": "build"
     },
     {
@@ -1910,7 +1920,7 @@
       "source_location": "L772",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_dashboard_772",
-      "community": 23,
+      "community": 1,
       "norm_label": "dashboard"
     },
     {
@@ -1920,7 +1930,7 @@
       "source_location": "L789",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_important",
-      "community": 23,
+      "community": 1,
       "norm_label": "important"
     },
     {
@@ -1930,7 +1940,7 @@
       "source_location": "L801",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_definition_of_done_801",
-      "community": 23,
+      "community": 1,
       "norm_label": "definition of done"
     },
     {
@@ -1990,7 +2000,7 @@
       "source_location": "L865",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_phase_12_evaluation_framework",
-      "community": 1,
+      "community": 25,
       "norm_label": "phase 12 \u2014 evaluation framework"
     },
     {
@@ -2000,7 +2010,7 @@
       "source_location": "L867",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_objective_867",
-      "community": 1,
+      "community": 25,
       "norm_label": "objective"
     },
     {
@@ -2010,7 +2020,7 @@
       "source_location": "L873",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_dataset",
-      "community": 1,
+      "community": 25,
       "norm_label": "dataset"
     },
     {
@@ -2020,7 +2030,7 @@
       "source_location": "L902",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_metrics",
-      "community": 1,
+      "community": 25,
       "norm_label": "metrics"
     },
     {
@@ -2030,7 +2040,7 @@
       "source_location": "L915",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_example_915",
-      "community": 1,
+      "community": 25,
       "norm_label": "example"
     },
     {
@@ -2040,7 +2050,7 @@
       "source_location": "L929",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_definition_of_done_929",
-      "community": 1,
+      "community": 25,
       "norm_label": "definition of done"
     },
     {
@@ -3557,7 +3567,7 @@
       "label": "AI responsibility",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L25",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "readme_ai_responsibility",
       "community": 20,
@@ -3567,7 +3577,7 @@
       "label": "Data safety",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L29",
+      "source_location": "L34",
       "_origin": "ast",
       "id": "readme_data_safety",
       "community": 20,
@@ -3577,7 +3587,7 @@
       "label": "Checks",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L33",
+      "source_location": "L38",
       "_origin": "ast",
       "id": "readme_checks",
       "community": 20,
@@ -3609,7 +3619,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/composables/useReviewWorkflow.ts",
-      "source_location": "L12",
+      "source_location": "L13",
       "weight": 1.0,
       "source": "app_composables_usereviewworkflow",
       "target": "app_composables_usereviewworkflow_event",
@@ -3619,7 +3629,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/composables/useReviewWorkflow.ts",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "source": "app_composables_usereviewworkflow",
       "target": "app_composables_usereviewworkflow_getstate",
@@ -3629,7 +3639,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/composables/useReviewWorkflow.ts",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "source": "app_composables_usereviewworkflow",
       "target": "app_composables_usereviewworkflow_stamp",
@@ -3639,7 +3649,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/composables/useReviewWorkflow.ts",
-      "source_location": "L4",
+      "source_location": "L5",
       "weight": 1.0,
       "source": "app_composables_usereviewworkflow",
       "target": "app_composables_usereviewworkflow_state",
@@ -3649,10 +3659,20 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/composables/useReviewWorkflow.ts",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0,
       "source": "app_composables_usereviewworkflow",
       "target": "app_composables_usereviewworkflow_usereviewworkflow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/composables/useReviewWorkflow.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "app_composables_usereviewworkflow",
+      "target": "app_composables_usereviewworkflow_workflowstate",
       "confidence_score": 1.0
     },
     {
@@ -3660,7 +3680,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/composables/useReviewWorkflow.ts",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0,
       "source": "app_composables_usereviewworkflow_usereviewworkflow",
       "target": "app_composables_usereviewworkflow_getstate",
@@ -3671,7 +3691,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/composables/useReviewWorkflow.ts",
-      "source_location": "L12",
+      "source_location": "L13",
       "weight": 1.0,
       "source": "app_composables_usereviewworkflow_event",
       "target": "app_composables_usereviewworkflow_stamp",
@@ -3682,7 +3702,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/composables/useReviewWorkflow.ts",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0,
       "source": "app_composables_usereviewworkflow_usereviewworkflow",
       "target": "app_composables_usereviewworkflow_stamp",
@@ -3693,7 +3713,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/composables/useReviewWorkflow.ts",
-      "source_location": "L27",
+      "source_location": "L28",
       "weight": 1.0,
       "source": "app_composables_usereviewworkflow_usereviewworkflow",
       "target": "app_composables_usereviewworkflow_event",
@@ -3705,7 +3725,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/composables/useReviewWorkflow.ts",
-      "source_location": "L31",
+      "source_location": "L32",
       "weight": 1.0,
       "source": "app_composables_usereviewworkflow_usereviewworkflow",
       "target": "app_types_amanah_recommendedaction"
@@ -6935,7 +6955,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L25",
+      "source_location": "L30",
       "weight": 1.0,
       "source": "readme_amanah",
       "target": "readme_ai_responsibility",
@@ -6945,7 +6965,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L33",
+      "source_location": "L38",
       "weight": 1.0,
       "source": "readme_amanah",
       "target": "readme_checks",
@@ -6965,7 +6985,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L29",
+      "source_location": "L34",
       "weight": 1.0,
       "source": "readme_amanah",
       "target": "readme_data_safety",
@@ -6983,5 +7003,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "0ec64d8cc548d477ddd0a1f2441e61782ec1c0d2"
+  "built_at_commit": "322d97803c1f3439daa3e36450f3a4ede58a4ed7"
 }
