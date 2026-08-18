@@ -1,0 +1,127 @@
+{
+  "app/app.config.ts": {
+    "mtime": 1786972509.0,
+    "ast_hash": "5254e37e277edbda408a5725fb4d6541",
+    "semantic_hash": ""
+  },
+  "app/app.vue": {
+    "mtime": 1787059671.1809409,
+    "ast_hash": "3cb3dbbb423f83d3dee7ed2d5b42b7c5",
+    "semantic_hash": ""
+  },
+  "app/components/AppLogo.vue": {
+    "mtime": 1786972509.0,
+    "ast_hash": "0863a1ca1a69dcceb0b71965fd05a44e",
+    "semantic_hash": ""
+  },
+  "app/components/AppShell.vue": {
+    "mtime": 1787060118.2801251,
+    "ast_hash": "17b9b2aca8cdbddacac6c0ab29ce6c66",
+    "semantic_hash": ""
+  },
+  "app/components/TemplateMenu.vue": {
+    "mtime": 1786972509.0,
+    "ast_hash": "91a537fb157b16deaa0c2f30978971a4",
+    "semantic_hash": ""
+  },
+  "app/composables/useCampaigns.ts": {
+    "mtime": 1787059688.0863235,
+    "ast_hash": "d2e2d3003bcaf293fdf93b1d4347d60e",
+    "semantic_hash": ""
+  },
+  "app/data/campaigns.ts": {
+    "mtime": 1787060118.2801251,
+    "ast_hash": "f8d84017e82d9a1dcd8cc294e14cead1",
+    "semantic_hash": ""
+  },
+  "app/data/policies.ts": {
+    "mtime": 1787059671.1939976,
+    "ast_hash": "b4d4e02dc4f214e77268778882cf6c8f",
+    "semantic_hash": ""
+  },
+  "app/pages/campaigns/[id].vue": {
+    "mtime": 1787060132.3227592,
+    "ast_hash": "bf20450583b9a615a92027ced1bfd85e",
+    "semantic_hash": ""
+  },
+  "app/pages/campaigns/[id]/activity.vue": {
+    "mtime": 1787060118.2801251,
+    "ast_hash": "d65a3d15f98bd25d4a38650aacfcb4d5",
+    "semantic_hash": ""
+  },
+  "app/pages/campaigns/[id]/evidence.vue": {
+    "mtime": 1787060118.2801251,
+    "ast_hash": "586c86ab27a34872c0d42ca1444cd5b8",
+    "semantic_hash": ""
+  },
+  "app/pages/campaigns/index.vue": {
+    "mtime": 1787060132.3237588,
+    "ast_hash": "a881750aa8006894bc93e1bb0a89b6e3",
+    "semantic_hash": ""
+  },
+  "app/pages/evals.vue": {
+    "mtime": 1787060118.2801251,
+    "ast_hash": "25433fe163bab6187bd5b559703eb46d",
+    "semantic_hash": ""
+  },
+  "app/pages/index.vue": {
+    "mtime": 1787060118.2801251,
+    "ast_hash": "0e09052a8057183e00d509ec9b9abb82",
+    "semantic_hash": ""
+  },
+  "app/pages/knowledge.vue": {
+    "mtime": 1787060118.2801251,
+    "ast_hash": "5f89d4bf59b43d118dd228f7ab87ec16",
+    "semantic_hash": ""
+  },
+  "app/types/amanah.ts": {
+    "mtime": 1787060153.580052,
+    "ast_hash": "72bd03721fa52c5f2130af0ebf3de987",
+    "semantic_hash": ""
+  },
+  "eslint.config.mjs": {
+    "mtime": 1786972509.0,
+    "ast_hash": "9ae8ff4755aafd01ece111a6d3086d32",
+    "semantic_hash": ""
+  },
+  "nuxt.config.ts": {
+    "mtime": 1786972509.0,
+    "ast_hash": "8de8345114f19405f5a2f3ae967b5ac4",
+    "semantic_hash": ""
+  },
+  "package.json": {
+    "mtime": 1787059671.177078,
+    "ast_hash": "812a09ecc026e34aba3448253136ab28",
+    "semantic_hash": ""
+  },
+  "renovate.json": {
+    "mtime": 1786972509.0,
+    "ast_hash": "589921bd03d1d9b66e27fac32c2e0e01",
+    "semantic_hash": ""
+  },
+  "tsconfig.json": {
+    "mtime": 1786972509.0,
+    "ast_hash": "44a7760e440af404ce6bd8f20de6f1d2",
+    "semantic_hash": ""
+  },
+  ".github/workflows/ci.yml": {
+    "mtime": 1786972509.0,
+    "ast_hash": "6ed907c85d875e378d3371805f0dab2b",
+    "semantic_hash": ""
+  },
+  "Amanah \u2014 Phased Product Development Plan.md": {
+    "mtime": 1787059478.6031494,
+    "ast_hash": "9965b0cb965fd358e4da91011d76094e",
+    "semantic_hash": ""
+  },
+  "LaunchGood Applied AI Engineer \u2014 AI Campaign Trust & Safety Review Copilot.md": {
+    "mtime": 1787059233.6348846,
+    "ast_hash": "fc57970def3010764423f354bd00856f",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1787060165.7248144,
+    "ast_hash": "daf78c1b4da45fbc1063f13d7721a0a9",
+    "semantic_hash": ""
+  }
+}
