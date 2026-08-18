@@ -1,6 +1,6 @@
 # Amanah
 
-Amanah is an AI-assisted campaign review workspace for human-led Trust & Safety decisions. This repository currently implements Phases 0-5 of the product plan with fictional local data.
+Amanah is an AI-assisted campaign review workspace for human-led Trust & Safety decisions. This repository currently implements Phases 0-10 of the product plan with fictional local data.
 
 ## Run locally
 
@@ -18,9 +18,14 @@ Open `http://localhost:3000`.
 - Structured campaign profile extraction from seeded data
 - Cross-source consistency findings with evidence and confidence
 - Fictional policy knowledge base and keyword retrieval
+- One-click AI review output with risk scoring and recommendations
+- Human decision panel with reviewer feedback and notes
+- Event-based audit trail
+- Upload and re-review flow that can resolve the demo beneficiary finding
+- AI priority queue for operational triage
 - Responsive Nuxt 4 + TypeScript + Nuxt UI shell
 
-The current extraction is deterministic demo logic. External model calls, Supabase persistence, human actions, re-review, and evaluation datasets are deliberately deferred to later phases.
+The current analysis is deterministic demo logic over a dummy database. External model calls, Supabase persistence, authentication, and a larger evaluation dataset are deliberately deferred to later phases.
 
 ## AI responsibility
 

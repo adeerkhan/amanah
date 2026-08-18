@@ -1,80 +1,12 @@
 <script setup lang="ts">
-import { campaigns } from '~/data/campaigns'
-
-const stats = [{ label: 'Pending reviews', value: '27', tone: 'text-[#1e7c50]' }, { label: 'High risk', value: '4', tone: 'text-[#b04437]' }, { label: 'Needs information', value: '9', tone: 'text-[#9a6410]' }, { label: 'Completed today', value: '18', tone: 'text-[#1e7c50]' }, { label: 'Median review time', value: '11m', tone: 'text-[#17211b]' }]
+const { priority } = useReviewWorkflow()
+const stats = [{ label: 'Awaiting review', value: '27', change: '+4 today', tone: 'green' }, { label: 'High attention', value: '04', change: '2 escalated', tone: 'red' }, { label: 'Needs evidence', value: '09', change: '34% of queue', tone: 'amber' }, { label: 'Median review time', value: '11m', change: '↓ 18% this week', tone: 'dark' }]
+const queue = computed(() => priority.value)
 </script>
-
 <template>
-  <div class="mx-auto max-w-7xl">
-    <div class="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-      <div>
-        <p class="eyebrow">
-          Tuesday, 18 August 2026
-        </p><h1 class="mt-2 text-3xl font-semibold tracking-tight">
-          Review queue
-        </h1><p class="mt-2 muted">
-          A clear view of the cases that need human attention.
-        </p>
-      </div><NuxtLink
-        to="/campaigns/urgent-medical"
-        class="rounded-lg bg-[#1e7c50] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#17623f]"
-      >Open high-risk demo</NuxtLink>
-    </div><div class="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
-      <div
-        v-for="stat in stats"
-        :key="stat.label"
-        class="panel p-5"
-      >
-        <p class="text-sm muted">
-          {{ stat.label }}
-        </p><p
-          class="mt-3 text-3xl font-semibold"
-          :class="stat.tone"
-        >
-          {{ stat.value }}
-        </p>
-      </div>
-    </div><div class="mt-8 grid gap-6 xl:grid-cols-[1fr_320px]">
-      <section class="panel overflow-hidden">
-        <div class="flex items-center justify-between border-b border-[#e7ece7] px-5 py-4">
-          <div>
-            <h2 class="font-semibold">
-              Priority review queue
-            </h2><p class="mt-1 text-sm muted">
-              Sorted by evidence severity and missing information
-            </p>
-          </div><NuxtLink
-            to="/campaigns"
-            class="text-sm font-semibold text-[#1e7c50]"
-          >View all</NuxtLink>
-        </div><div class="divide-y divide-[#e7ece7]">
-          <NuxtLink
-            v-for="campaign in campaigns"
-            :key="campaign.id"
-            :to="`/campaigns/${campaign.id}`"
-            class="grid gap-3 px-5 py-4 hover:bg-[#fafcf9] md:grid-cols-[1.6fr_1fr_100px_120px] md:items-center"
-          ><div><p class="font-medium">{{ campaign.title }}</p><p class="mt-1 text-xs muted">{{ campaign.creator }} · {{ campaign.category }}</p></div><p class="text-sm">${{ campaign.goal.toLocaleString() }}</p><span
-            class="pill w-fit"
-            :class="`risk-${campaign.risk}`"
-          >{{ campaign.risk }} risk</span><p class="text-sm muted">{{ campaign.age }} old</p></NuxtLink>
-        </div>
-      </section><aside class="panel p-5">
-        <p class="eyebrow">
-          Portfolio signal
-        </p><h2 class="mt-3 text-lg font-semibold">
-          Documentation gaps are driving today’s queue
-        </h2><p class="mt-3 text-sm leading-6 muted">
-          9 campaigns are waiting on evidence. Amanah groups missing documents and source conflicts so reviewers can work the highest-impact cases first.
-        </p><div class="mt-5 space-y-3 text-sm">
-          <div class="flex justify-between">
-            <span>Missing documentation</span><strong>9</strong>
-          </div><div class="flex justify-between">
-            <span>Beneficiary inconsistencies</span><strong>3</strong>
-          </div><div class="flex justify-between">
-            <span>Senior review suggested</span><strong>2</strong>
-          </div>
-        </div>
-      </aside>
-    </div>
+  <div class="dashboard-page">
+    <section class="hero-row"><div><p class="eyebrow">Tuesday · 18 August 2026</p><h1 class="display-title">Good morning, Samira<span>.</span></h1><p class="hero-copy">Here’s what needs a careful look today.</p></div><div class="hero-tools"><span class="system-status"><i /> All systems operational</span><NuxtLink to="/campaigns/urgent-medical" class="primary-btn">Open high-risk demo <span>↗</span></NuxtLink></div></section>
+    <section class="metric-grid"><article v-for="stat in stats" :key="stat.label" class="metric-card"><div class="metric-top"><span>{{ stat.label }}</span><span class="metric-arrow">↗</span></div><strong :class="`metric-${stat.tone}`">{{ stat.value }}</strong><small>{{ stat.change }}</small></article></section>
+    <section class="content-grid"><div class="queue-card panel"><div class="section-head"><div><p class="eyebrow">AI priority queue</p><h2>Cases needing attention</h2></div><NuxtLink to="/campaigns" class="text-link">View all cases <span>→</span></NuxtLink></div><div class="queue-head"><span>Campaign</span><span>Priority reason</span><span>Risk</span><span>Age</span></div><NuxtLink v-for="(campaign, index) in queue" :key="campaign.id" :to="`/campaigns/${campaign.id}`" class="queue-row"><div class="campaign-cell"><span class="rank">0{{ index + 1 }}</span><div><strong>{{ campaign.title }}</strong><small>{{ campaign.creator }} · {{ campaign.category }}</small></div></div><div class="reason"><span v-if="campaign.findings[0]">{{ campaign.findings[0].title }}</span><span v-else>Complete dossier · low urgency</span></div><span class="pill" :class="`risk-${campaign.risk}`">{{ campaign.risk }}</span><span class="age">{{ campaign.age }}</span></NuxtLink></div><aside class="signal-column"><div class="signal-card dark-card"><p class="eyebrow light">Portfolio radar</p><h2>A pattern worth a closer look</h2><p>3 cases share beneficiary evidence gaps. This is a prioritization signal, not an accusation.</p><NuxtLink to="/campaigns" class="light-link">Inspect cases <span>→</span></NuxtLink><div class="signal-orbit"><b>3</b><small>cases</small></div></div><div class="signal-card panel"><p class="eyebrow">Review principle</p><blockquote>“AI doesn’t decide who deserves trust. It helps reviewers see the evidence faster.”</blockquote><div class="quote-author"><span class="avatar">A</span><span>Amanah design principle</span></div></div></aside></section>
   </div>
 </template>
