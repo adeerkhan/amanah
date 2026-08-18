@@ -44,5 +44,15 @@
   "42": "AppLogo.vue",
   "43": "TemplateMenu.vue",
   "44": "eslint.config.mjs",
-  "45": "nuxt.config.ts"
+  "45": "nuxt.config.ts",
+  "46": "evaluation.ts",
+  "47": "37. Failure Handling",
+  "48": "useErrorHandler.ts",
+  "49": "usePortfolioRadar.ts",
+  "50": "useProgressiveLoading.ts",
+  "51": "ErrorBanner.vue",
+  "52": "portfolio.vue",
+  "53": "3. Most Important Feature: Evidence-Based AI",
+  "54": "8. Dashboard",
+  "55": "LaunchGood Applied AI Engineer Prototype"
 }

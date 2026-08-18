@@ -44,6 +44,36 @@
       "norm_label": "appshell.vue"
     },
     {
+      "label": "{ toasts, dismiss }",
+      "file_type": "code",
+      "source_file": "app/components/AppShell.vue",
+      "source_location": "L87",
+      "_origin": "ast",
+      "id": "app_components_appshell_toasts_dismiss",
+      "community": 34,
+      "norm_label": "{ toasts, dismiss }"
+    },
+    {
+      "label": "ErrorBanner.vue",
+      "file_type": "code",
+      "source_file": "app/components/ErrorBanner.vue",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_components_errorbanner",
+      "community": 51,
+      "norm_label": "errorbanner.vue"
+    },
+    {
+      "label": "emit",
+      "file_type": "code",
+      "source_file": "app/components/ErrorBanner.vue",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "app_components_errorbanner_emit",
+      "community": 51,
+      "norm_label": "emit"
+    },
+    {
       "label": "TemplateMenu.vue",
       "file_type": "code",
       "source_file": "app/components/TemplateMenu.vue",
@@ -52,6 +82,46 @@
       "id": "app_components_templatemenu",
       "community": 43,
       "norm_label": "templatemenu.vue"
+    },
+    {
+      "label": "useAppToast.ts",
+      "file_type": "code",
+      "source_file": "app/composables/useAppToast.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_composables_useapptoast",
+      "community": 24,
+      "norm_label": "useapptoast.ts"
+    },
+    {
+      "label": "AppToast",
+      "file_type": "code",
+      "source_file": "app/composables/useAppToast.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_composables_useapptoast_apptoast",
+      "community": 24,
+      "norm_label": "apptoast"
+    },
+    {
+      "label": "toasts",
+      "file_type": "code",
+      "source_file": "app/composables/useAppToast.ts",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "app_composables_useapptoast_toasts",
+      "community": 24,
+      "norm_label": "toasts"
+    },
+    {
+      "label": "useAppToast()",
+      "file_type": "code",
+      "source_file": "app/composables/useAppToast.ts",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "app_composables_useapptoast_useapptoast",
+      "community": 24,
+      "norm_label": "useapptoast()"
     },
     {
       "label": "useCampaigns.ts",
@@ -72,6 +142,96 @@
       "id": "app_composables_usecampaigns_usecampaigns",
       "community": 35,
       "norm_label": "usecampaigns()"
+    },
+    {
+      "label": "useErrorHandler.ts",
+      "file_type": "code",
+      "source_file": "app/composables/useErrorHandler.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_composables_useerrorhandler",
+      "community": 48,
+      "norm_label": "useerrorhandler.ts"
+    },
+    {
+      "label": "AppError",
+      "file_type": "code",
+      "source_file": "app/composables/useErrorHandler.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_composables_useerrorhandler_apperror",
+      "community": 48,
+      "norm_label": "apperror"
+    },
+    {
+      "label": "useErrorHandler()",
+      "file_type": "code",
+      "source_file": "app/composables/useErrorHandler.ts",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "app_composables_useerrorhandler_useerrorhandler",
+      "community": 48,
+      "norm_label": "useerrorhandler()"
+    },
+    {
+      "label": "usePortfolioRadar.ts",
+      "file_type": "code",
+      "source_file": "app/composables/usePortfolioRadar.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_composables_useportfolioradar",
+      "community": 49,
+      "norm_label": "useportfolioradar.ts"
+    },
+    {
+      "label": "PortfolioSignal",
+      "file_type": "code",
+      "source_file": "app/composables/usePortfolioRadar.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "app_composables_useportfolioradar_portfoliosignal",
+      "community": 49,
+      "norm_label": "portfoliosignal"
+    },
+    {
+      "label": "usePortfolioRadar()",
+      "file_type": "code",
+      "source_file": "app/composables/usePortfolioRadar.ts",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "app_composables_useportfolioradar_useportfolioradar",
+      "community": 49,
+      "norm_label": "useportfolioradar()"
+    },
+    {
+      "label": "useProgressiveLoading.ts",
+      "file_type": "code",
+      "source_file": "app/composables/useProgressiveLoading.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_composables_useprogressiveloading",
+      "community": 50,
+      "norm_label": "useprogressiveloading.ts"
+    },
+    {
+      "label": "LoadingStep",
+      "file_type": "code",
+      "source_file": "app/composables/useProgressiveLoading.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_composables_useprogressiveloading_loadingstep",
+      "community": 50,
+      "norm_label": "loadingstep"
+    },
+    {
+      "label": "useProgressiveLoading()",
+      "file_type": "code",
+      "source_file": "app/composables/useProgressiveLoading.ts",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "app_composables_useprogressiveloading_useprogressiveloading",
+      "community": 50,
+      "norm_label": "useprogressiveloading()"
     },
     {
       "label": "useReviewWorkflow.ts",
@@ -174,6 +334,46 @@
       "norm_label": "campaigns"
     },
     {
+      "label": "evaluation.ts",
+      "file_type": "code",
+      "source_file": "app/data/evaluation.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_data_evaluation",
+      "community": 46,
+      "norm_label": "evaluation.ts"
+    },
+    {
+      "label": "EvalCase",
+      "file_type": "code",
+      "source_file": "app/data/evaluation.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_data_evaluation_evalcase",
+      "community": 46,
+      "norm_label": "evalcase"
+    },
+    {
+      "label": "evalCases",
+      "file_type": "code",
+      "source_file": "app/data/evaluation.ts",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "app_data_evaluation_evalcases",
+      "community": 46,
+      "norm_label": "evalcases"
+    },
+    {
+      "label": "runEvaluation()",
+      "file_type": "code",
+      "source_file": "app/data/evaluation.ts",
+      "source_location": "L167",
+      "_origin": "ast",
+      "id": "app_data_evaluation_runevaluation",
+      "community": 46,
+      "norm_label": "runevaluation()"
+    },
+    {
       "label": "policies.ts",
       "file_type": "code",
       "source_file": "app/data/policies.ts",
@@ -244,10 +444,40 @@
       "norm_label": "{ runreview, decide, setnote, setfeedback, uploadevidence, rereview, openfinding, getworkflow }"
     },
     {
+      "label": "{ show: showToast }",
+      "file_type": "code",
+      "source_file": "app/pages/campaigns/[id].vue",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "app_pages_campaigns_id_show_showtoast",
+      "community": 3,
+      "norm_label": "{ show: showtoast }"
+    },
+    {
+      "label": "{ steps: loadingSteps, isRunning: isLoading, start: startLoading, advance }",
+      "file_type": "code",
+      "source_file": "app/pages/campaigns/[id].vue",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "app_pages_campaigns_id_steps_loadingsteps_isrunning_isloading_start_startloading_advance",
+      "community": 3,
+      "norm_label": "{ steps: loadingsteps, isrunning: isloading, start: startloading, advance }"
+    },
+    {
+      "label": "{ errors: appErrors, dismissError }",
+      "file_type": "code",
+      "source_file": "app/pages/campaigns/[id].vue",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "app_pages_campaigns_id_errors_apperrors_dismisserror",
+      "community": 3,
+      "norm_label": "{ errors: apperrors, dismisserror }"
+    },
+    {
       "label": "workflow",
       "file_type": "code",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L11",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "app_pages_campaigns_id_workflow",
       "community": 3,
@@ -257,7 +487,7 @@
       "label": "selectedDocument",
       "file_type": "code",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L12",
+      "source_location": "L15",
       "_origin": "ast",
       "id": "app_pages_campaigns_id_selecteddocument",
       "community": 3,
@@ -267,7 +497,7 @@
       "label": "selectedFindingId",
       "file_type": "code",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L13",
+      "source_location": "L16",
       "_origin": "ast",
       "id": "app_pages_campaigns_id_selectedfindingid",
       "community": 3,
@@ -277,17 +507,27 @@
       "label": "output",
       "file_type": "code",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L14",
+      "source_location": "L17",
       "_origin": "ast",
       "id": "app_pages_campaigns_id_output",
       "community": 3,
       "norm_label": "output"
     },
     {
+      "label": "resolvedOutput",
+      "file_type": "code",
+      "source_file": "app/pages/campaigns/[id].vue",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "app_pages_campaigns_id_resolvedoutput",
+      "community": 3,
+      "norm_label": "resolvedoutput"
+    },
+    {
       "label": "selectedFinding",
       "file_type": "code",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L15",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "app_pages_campaigns_id_selectedfinding",
       "community": 3,
@@ -297,7 +537,7 @@
       "label": "policies",
       "file_type": "code",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L19",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "app_pages_campaigns_id_policies",
       "community": 3,
@@ -307,7 +547,7 @@
       "label": "actionLabel",
       "file_type": "code",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L21",
+      "source_location": "L25",
       "_origin": "ast",
       "id": "app_pages_campaigns_id_actionlabel",
       "community": 3,
@@ -317,7 +557,7 @@
       "label": "run()",
       "file_type": "code",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L28",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "app_pages_campaigns_id_run",
       "community": 3,
@@ -327,7 +567,7 @@
       "label": "selectFinding()",
       "file_type": "code",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L30",
+      "source_location": "L41",
       "_origin": "ast",
       "id": "app_pages_campaigns_id_selectfinding",
       "community": 3,
@@ -337,7 +577,7 @@
       "label": "makeDecision()",
       "file_type": "code",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L40",
+      "source_location": "L51",
       "_origin": "ast",
       "id": "app_pages_campaigns_id_makedecision",
       "community": 3,
@@ -494,14 +734,54 @@
       "norm_label": "evals.vue"
     },
     {
-      "label": "metrics",
+      "label": "results",
       "file_type": "code",
       "source_file": "app/pages/evals.vue",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "app_pages_evals_metrics",
+      "id": "app_pages_evals_results",
       "community": 38,
-      "norm_label": "metrics"
+      "norm_label": "results"
+    },
+    {
+      "label": "running",
+      "file_type": "code",
+      "source_file": "app/pages/evals.vue",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "app_pages_evals_running",
+      "community": 38,
+      "norm_label": "running"
+    },
+    {
+      "label": "steps",
+      "file_type": "code",
+      "source_file": "app/pages/evals.vue",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "app_pages_evals_steps",
+      "community": 38,
+      "norm_label": "steps"
+    },
+    {
+      "label": "currentStep",
+      "file_type": "code",
+      "source_file": "app/pages/evals.vue",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "app_pages_evals_currentstep",
+      "community": 38,
+      "norm_label": "currentstep"
+    },
+    {
+      "label": "runEval()",
+      "file_type": "code",
+      "source_file": "app/pages/evals.vue",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "app_pages_evals_runeval",
+      "community": 38,
+      "norm_label": "runeval()"
     },
     {
       "label": "index.vue",
@@ -572,6 +852,26 @@
       "id": "app_pages_knowledge_visible",
       "community": 32,
       "norm_label": "visible"
+    },
+    {
+      "label": "portfolio.vue",
+      "file_type": "code",
+      "source_file": "app/pages/portfolio.vue",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_pages_portfolio",
+      "community": 52,
+      "norm_label": "portfolio.vue"
+    },
+    {
+      "label": "{ signals, portfolioStats }",
+      "file_type": "code",
+      "source_file": "app/pages/portfolio.vue",
+      "source_location": "L2",
+      "_origin": "ast",
+      "id": "app_pages_portfolio_signals_portfoliostats",
+      "community": 52,
+      "norm_label": "{ signals, portfoliostats }"
     },
     {
       "label": "amanah.ts",
@@ -1710,7 +2010,7 @@
       "source_location": "L567",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_phase_7_human_in_the_loop_workflow",
-      "community": 1,
+      "community": 15,
       "norm_label": "phase 7 \u2014 human-in-the-loop workflow"
     },
     {
@@ -1720,7 +2020,7 @@
       "source_location": "L569",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_objective_569",
-      "community": 1,
+      "community": 15,
       "norm_label": "objective"
     },
     {
@@ -1730,7 +2030,7 @@
       "source_location": "L575",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_build_575",
-      "community": 1,
+      "community": 15,
       "norm_label": "build"
     },
     {
@@ -1740,7 +2040,7 @@
       "source_location": "L594",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_reviewer_feedback",
-      "community": 1,
+      "community": 15,
       "norm_label": "reviewer feedback"
     },
     {
@@ -1750,7 +2050,7 @@
       "source_location": "L609",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_important_behavior",
-      "community": 1,
+      "community": 15,
       "norm_label": "important behavior"
     },
     {
@@ -1760,7 +2060,7 @@
       "source_location": "L622",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_definition_of_done_622",
-      "community": 1,
+      "community": 15,
       "norm_label": "definition of done"
     },
     {
@@ -1880,7 +2180,7 @@
       "source_location": "L746",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_phase_10_review_queue_intelligence",
-      "community": 23,
+      "community": 1,
       "norm_label": "phase 10 \u2014 review queue intelligence"
     },
     {
@@ -1890,7 +2190,7 @@
       "source_location": "L748",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_objective_748",
-      "community": 23,
+      "community": 1,
       "norm_label": "objective"
     },
     {
@@ -1900,7 +2200,7 @@
       "source_location": "L752",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_build_752",
-      "community": 23,
+      "community": 1,
       "norm_label": "build"
     },
     {
@@ -1910,7 +2210,7 @@
       "source_location": "L772",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_dashboard_772",
-      "community": 23,
+      "community": 1,
       "norm_label": "dashboard"
     },
     {
@@ -1920,7 +2220,7 @@
       "source_location": "L789",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_important",
-      "community": 23,
+      "community": 1,
       "norm_label": "important"
     },
     {
@@ -1930,7 +2230,7 @@
       "source_location": "L801",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_definition_of_done_801",
-      "community": 23,
+      "community": 1,
       "norm_label": "definition of done"
     },
     {
@@ -1940,7 +2240,7 @@
       "source_location": "L807",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_phase_11_portfolio_risk_radar",
-      "community": 1,
+      "community": 23,
       "norm_label": "phase 11 \u2014 portfolio risk radar"
     },
     {
@@ -1950,7 +2250,7 @@
       "source_location": "L809",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_objective_809",
-      "community": 1,
+      "community": 23,
       "norm_label": "objective"
     },
     {
@@ -1960,7 +2260,7 @@
       "source_location": "L815",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_signals",
-      "community": 1,
+      "community": 23,
       "norm_label": "signals"
     },
     {
@@ -1970,7 +2270,7 @@
       "source_location": "L826",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_optional_relationship_graph",
-      "community": 1,
+      "community": 23,
       "norm_label": "optional relationship graph"
     },
     {
@@ -1980,7 +2280,7 @@
       "source_location": "L849",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_definition_of_done_849",
-      "community": 1,
+      "community": 23,
       "norm_label": "definition of done"
     },
     {
@@ -2290,7 +2590,7 @@
       "source_location": "L1081",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_phase_16_production_deployment",
-      "community": 24,
+      "community": 1,
       "norm_label": "phase 16 \u2014 production deployment"
     },
     {
@@ -2300,7 +2600,7 @@
       "source_location": "L1083",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_architecture_1083",
-      "community": 24,
+      "community": 1,
       "norm_label": "architecture"
     },
     {
@@ -2310,7 +2610,7 @@
       "source_location": "L1097",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_environment_variables",
-      "community": 24,
+      "community": 1,
       "norm_label": "environment variables"
     },
     {
@@ -2320,7 +2620,7 @@
       "source_location": "L1105",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_deployment_checklist",
-      "community": 24,
+      "community": 1,
       "norm_label": "deployment checklist"
     },
     {
@@ -2330,7 +2630,7 @@
       "source_location": "L1118",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_definition_of_done_1118",
-      "community": 24,
+      "community": 1,
       "norm_label": "definition of done"
     },
     {
@@ -2460,7 +2760,7 @@
       "source_location": "L1290",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_agent_delegation_strategy",
-      "community": 15,
+      "community": 1,
       "norm_label": "agent delegation strategy"
     },
     {
@@ -2470,7 +2770,7 @@
       "source_location": "L1296",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_agent_group_1_product_foundation",
-      "community": 15,
+      "community": 1,
       "norm_label": "agent group 1 \u2014 product foundation"
     },
     {
@@ -2480,7 +2780,7 @@
       "source_location": "L1312",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_agent_group_2_ai_core",
-      "community": 15,
+      "community": 1,
       "norm_label": "agent group 2 \u2014 ai core"
     },
     {
@@ -2490,7 +2790,7 @@
       "source_location": "L1329",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_agent_group_3_workflow",
-      "community": 15,
+      "community": 1,
       "norm_label": "agent group 3 \u2014 workflow"
     },
     {
@@ -2500,7 +2800,7 @@
       "source_location": "L1345",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_agent_group_4_intelligence",
-      "community": 15,
+      "community": 1,
       "norm_label": "agent group 4 \u2014 intelligence"
     },
     {
@@ -2510,7 +2810,7 @@
       "source_location": "L1361",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_agent_group_5_production",
-      "community": 15,
+      "community": 1,
       "norm_label": "agent group 5 \u2014 production"
     },
     {
@@ -2520,7 +2820,7 @@
       "source_location": "L1378",
       "_origin": "ast",
       "id": "amanah_phased_product_development_plan_agent_group_6_demo",
-      "community": 15,
+      "community": 1,
       "norm_label": "agent group 6 \u2014 demo"
     },
     {
@@ -2610,7 +2910,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "launchgood_applied_ai_engineer_ai_campaign_trust_safety_review_copilot_launchgood_applied_ai_engineer_prototype",
-      "community": 0,
+      "community": 55,
       "norm_label": "launchgood applied ai engineer prototype"
     },
     {
@@ -2620,7 +2920,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "launchgood_applied_ai_engineer_ai_campaign_trust_safety_review_copilot_project",
-      "community": 0,
+      "community": 55,
       "norm_label": "project"
     },
     {
@@ -2680,7 +2980,7 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "launchgood_applied_ai_engineer_ai_campaign_trust_safety_review_copilot_3_most_important_feature_evidence_based_ai",
-      "community": 0,
+      "community": 53,
       "norm_label": "3. most important feature: evidence-based ai"
     },
     {
@@ -2690,7 +2990,7 @@
       "source_location": "L130",
       "_origin": "ast",
       "id": "launchgood_applied_ai_engineer_ai_campaign_trust_safety_review_copilot_finding",
-      "community": 0,
+      "community": 53,
       "norm_label": "finding"
     },
     {
@@ -2790,7 +3090,7 @@
       "source_location": "L424",
       "_origin": "ast",
       "id": "launchgood_applied_ai_engineer_ai_campaign_trust_safety_review_copilot_8_dashboard",
-      "community": 0,
+      "community": 54,
       "norm_label": "8. dashboard"
     },
     {
@@ -2800,7 +3100,7 @@
       "source_location": "L440",
       "_origin": "ast",
       "id": "launchgood_applied_ai_engineer_ai_campaign_trust_safety_review_copilot_review_queue",
-      "community": 0,
+      "community": 54,
       "norm_label": "review queue"
     },
     {
@@ -3220,7 +3520,7 @@
       "source_location": "L1490",
       "_origin": "ast",
       "id": "launchgood_applied_ai_engineer_ai_campaign_trust_safety_review_copilot_37_failure_handling",
-      "community": 0,
+      "community": 47,
       "norm_label": "37. failure handling"
     },
     {
@@ -3230,7 +3530,7 @@
       "source_location": "L1496",
       "_origin": "ast",
       "id": "launchgood_applied_ai_engineer_ai_campaign_trust_safety_review_copilot_document_unreadable",
-      "community": 0,
+      "community": 47,
       "norm_label": "document unreadable"
     },
     {
@@ -3240,7 +3540,7 @@
       "source_location": "L1504",
       "_origin": "ast",
       "id": "launchgood_applied_ai_engineer_ai_campaign_trust_safety_review_copilot_model_unavailable",
-      "community": 0,
+      "community": 47,
       "norm_label": "model unavailable"
     },
     {
@@ -3250,7 +3550,7 @@
       "source_location": "L1512",
       "_origin": "ast",
       "id": "launchgood_applied_ai_engineer_ai_campaign_trust_safety_review_copilot_conflicting_evidence",
-      "community": 0,
+      "community": 47,
       "norm_label": "conflicting evidence"
     },
     {
@@ -3544,20 +3844,70 @@
       "norm_label": "run locally"
     },
     {
-      "label": "Current scope",
+      "label": "Architecture",
       "file_type": "document",
       "source_file": "README.md",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "readme_current_scope",
+      "id": "readme_architecture",
       "community": 20,
-      "norm_label": "current scope"
+      "norm_label": "architecture"
+    },
+    {
+      "label": "Features",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "readme_features",
+      "community": 20,
+      "norm_label": "features"
+    },
+    {
+      "label": "Core Workflow (Phases 0\u201310)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "readme_core_workflow_phases_0_10",
+      "community": 20,
+      "norm_label": "core workflow (phases 0\u201310)"
+    },
+    {
+      "label": "Intelligence (Phases 11\u201312)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "readme_intelligence_phases_11_12",
+      "community": 20,
+      "norm_label": "intelligence (phases 11\u201312)"
+    },
+    {
+      "label": "Reliability (Phases 13\u201315)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L46",
+      "_origin": "ast",
+      "id": "readme_reliability_phases_13_15",
+      "community": 20,
+      "norm_label": "reliability (phases 13\u201315)"
+    },
+    {
+      "label": "Production (Phases 16\u201318)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L52",
+      "_origin": "ast",
+      "id": "readme_production_phases_16_18",
+      "community": 20,
+      "norm_label": "production (phases 16\u201318)"
     },
     {
       "label": "AI responsibility",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L30",
+      "source_location": "L59",
       "_origin": "ast",
       "id": "readme_ai_responsibility",
       "community": 20,
@@ -3567,7 +3917,7 @@
       "label": "Data safety",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L34",
+      "source_location": "L63",
       "_origin": "ast",
       "id": "readme_data_safety",
       "community": 20,
@@ -3577,14 +3927,74 @@
       "label": "Checks",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L38",
+      "source_location": "L67",
       "_origin": "ast",
       "id": "readme_checks",
       "community": 20,
       "norm_label": "checks"
+    },
+    {
+      "label": "Deployment",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L75",
+      "_origin": "ast",
+      "id": "readme_deployment",
+      "community": 20,
+      "norm_label": "deployment"
     }
   ],
   "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/components/AppShell.vue",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "app_components_appshell",
+      "target": "app_components_appshell_toasts_dismiss",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/components/ErrorBanner.vue",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_components_errorbanner",
+      "target": "app_components_errorbanner_emit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/composables/useAppToast.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "app_composables_useapptoast",
+      "target": "app_composables_useapptoast_apptoast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/composables/useAppToast.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "app_composables_useapptoast",
+      "target": "app_composables_useapptoast_toasts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/composables/useAppToast.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "app_composables_useapptoast",
+      "target": "app_composables_useapptoast_useapptoast",
+      "confidence_score": 1.0
+    },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
@@ -3593,6 +4003,66 @@
       "weight": 1.0,
       "source": "app_composables_usecampaigns",
       "target": "app_composables_usecampaigns_usecampaigns",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/composables/useErrorHandler.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "app_composables_useerrorhandler",
+      "target": "app_composables_useerrorhandler_apperror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/composables/useErrorHandler.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "app_composables_useerrorhandler",
+      "target": "app_composables_useerrorhandler_useerrorhandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/composables/usePortfolioRadar.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "app_composables_useportfolioradar",
+      "target": "app_composables_useportfolioradar_portfoliosignal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/composables/usePortfolioRadar.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "app_composables_useportfolioradar",
+      "target": "app_composables_useportfolioradar_useportfolioradar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/composables/useProgressiveLoading.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "app_composables_useprogressiveloading",
+      "target": "app_composables_useprogressiveloading_loadingstep",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/composables/useProgressiveLoading.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "app_composables_useprogressiveloading",
+      "target": "app_composables_useprogressiveloading_useprogressiveloading",
       "confidence_score": 1.0
     },
     {
@@ -3733,6 +4203,36 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "app/data/evaluation.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "app_data_evaluation",
+      "target": "app_data_evaluation_evalcase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/data/evaluation.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "app_data_evaluation",
+      "target": "app_data_evaluation_evalcases",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/data/evaluation.ts",
+      "source_location": "L167",
+      "weight": 1.0,
+      "source": "app_data_evaluation",
+      "target": "app_data_evaluation_runevaluation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "app/data/policies.ts",
       "source_location": "L3",
       "weight": 1.0,
@@ -3754,10 +4254,20 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L21",
+      "source_location": "L25",
       "weight": 1.0,
       "source": "app_pages_campaigns_id",
       "target": "app_pages_campaigns_id_actionlabel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/pages/campaigns/[id].vue",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "app_pages_campaigns_id",
+      "target": "app_pages_campaigns_id_errors_apperrors_dismisserror",
       "confidence_score": 1.0
     },
     {
@@ -3774,7 +4284,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L40",
+      "source_location": "L51",
       "weight": 1.0,
       "source": "app_pages_campaigns_id",
       "target": "app_pages_campaigns_id_makedecision",
@@ -3784,7 +4294,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L14",
+      "source_location": "L17",
       "weight": 1.0,
       "source": "app_pages_campaigns_id",
       "target": "app_pages_campaigns_id_output",
@@ -3794,10 +4304,20 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L19",
+      "source_location": "L23",
       "weight": 1.0,
       "source": "app_pages_campaigns_id",
       "target": "app_pages_campaigns_id_policies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/pages/campaigns/[id].vue",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "app_pages_campaigns_id",
+      "target": "app_pages_campaigns_id_resolvedoutput",
       "confidence_score": 1.0
     },
     {
@@ -3814,7 +4334,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L28",
+      "source_location": "L32",
       "weight": 1.0,
       "source": "app_pages_campaigns_id",
       "target": "app_pages_campaigns_id_run",
@@ -3834,7 +4354,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L12",
+      "source_location": "L15",
       "weight": 1.0,
       "source": "app_pages_campaigns_id",
       "target": "app_pages_campaigns_id_selecteddocument",
@@ -3844,7 +4364,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L15",
+      "source_location": "L19",
       "weight": 1.0,
       "source": "app_pages_campaigns_id",
       "target": "app_pages_campaigns_id_selectedfinding",
@@ -3854,7 +4374,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L13",
+      "source_location": "L16",
       "weight": 1.0,
       "source": "app_pages_campaigns_id",
       "target": "app_pages_campaigns_id_selectedfindingid",
@@ -3864,7 +4384,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L30",
+      "source_location": "L41",
       "weight": 1.0,
       "source": "app_pages_campaigns_id",
       "target": "app_pages_campaigns_id_selectfinding",
@@ -3874,7 +4394,27 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/pages/campaigns/[id].vue",
-      "source_location": "L11",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "app_pages_campaigns_id",
+      "target": "app_pages_campaigns_id_show_showtoast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/pages/campaigns/[id].vue",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "app_pages_campaigns_id",
+      "target": "app_pages_campaigns_id_steps_loadingsteps_isrunning_isloading_start_startloading_advance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/pages/campaigns/[id].vue",
+      "source_location": "L14",
       "weight": 1.0,
       "source": "app_pages_campaigns_id",
       "target": "app_pages_campaigns_id_workflow",
@@ -3994,10 +4534,50 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/pages/evals.vue",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "app_pages_evals",
+      "target": "app_pages_evals_currentstep",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/pages/evals.vue",
       "source_location": "L4",
       "weight": 1.0,
       "source": "app_pages_evals",
-      "target": "app_pages_evals_metrics",
+      "target": "app_pages_evals_results",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/pages/evals.vue",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "app_pages_evals",
+      "target": "app_pages_evals_runeval",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/pages/evals.vue",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_pages_evals",
+      "target": "app_pages_evals_running",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/pages/evals.vue",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "app_pages_evals",
+      "target": "app_pages_evals_steps",
       "confidence_score": 1.0
     },
     {
@@ -4048,6 +4628,16 @@
       "weight": 1.0,
       "source": "app_pages_knowledge",
       "target": "app_pages_knowledge_visible",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/pages/portfolio.vue",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "app_pages_portfolio",
+      "target": "app_pages_portfolio_signals_portfoliostats",
       "confidence_score": 1.0
     },
     {
@@ -6935,7 +7525,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L30",
+      "source_location": "L59",
       "weight": 1.0,
       "source": "readme_amanah",
       "target": "readme_ai_responsibility",
@@ -6945,7 +7535,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L38",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "readme_amanah",
+      "target": "readme_architecture",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L67",
       "weight": 1.0,
       "source": "readme_amanah",
       "target": "readme_checks",
@@ -6955,20 +7555,30 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L14",
+      "source_location": "L63",
       "weight": 1.0,
       "source": "readme_amanah",
-      "target": "readme_current_scope",
+      "target": "readme_data_safety",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L34",
+      "source_location": "L75",
       "weight": 1.0,
       "source": "readme_amanah",
-      "target": "readme_data_safety",
+      "target": "readme_deployment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "readme_amanah",
+      "target": "readme_features",
       "confidence_score": 1.0
     },
     {
@@ -6980,8 +7590,48 @@
       "source": "readme_amanah",
       "target": "readme_run_locally",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "readme_features",
+      "target": "readme_core_workflow_phases_0_10",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "readme_features",
+      "target": "readme_intelligence_phases_11_12",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L52",
+      "weight": 1.0,
+      "source": "readme_features",
+      "target": "readme_production_phases_16_18",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "readme_features",
+      "target": "readme_reliability_phases_13_15",
+      "confidence_score": 1.0
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "25ea8423752f20e5c22fcf315fc3430bdc80d6a8"
+  "built_at_commit": "198bea984ca72c61c07977cf22e3fb409a67ea20"
 }

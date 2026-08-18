@@ -4,6 +4,9 @@ import type { RecommendedAction } from '~/types/amanah'
 const route = useRoute()
 const { getCampaign, retrievePolicies } = useCampaigns()
 const { runReview, decide, setNote, setFeedback, uploadEvidence, rereview, openFinding, getWorkflow } = useReviewWorkflow()
+const { show: showToast } = useAppToast()
+const { steps: loadingSteps, isRunning: isLoading, start: startLoading, advance } = useProgressiveLoading()
+const { errors: appErrors, dismissError } = useErrorHandler()
 
 const campaign = getCampaign(route.params.id as string)!
 if (!campaign) throw createError({ statusCode: 404, statusMessage: 'Campaign not found' })
@@ -12,6 +15,7 @@ const workflow = getWorkflow(campaign.id)
 const selectedDocument = ref(campaign.documents[0]!)
 const selectedFindingId = ref(campaign.findings[0]?.id)
 const output = computed(() => workflow.output)
+const resolvedOutput = computed(() => output.value!)
 const selectedFinding = computed(() =>
   output.value?.findings.find(f => f.id === selectedFindingId.value)
   || campaign.findings.find(f => f.id === selectedFindingId.value)
@@ -25,7 +29,14 @@ const actionLabel: Record<RecommendedAction, string> = {
   reject: 'Reject'
 }
 
-function run() { runReview(campaign) }
+async function run() {
+  startLoading(['Reading campaign…', 'Analyzing documents…', 'Comparing entities…', 'Checking policies…', 'Generating recommendation…'])
+  for (let i = 0; i < 5; i++) {
+    await advance()
+  }
+  runReview(campaign)
+  showToast('AI review completed', 'success')
+}
 
 function selectFinding(id: string) {
   selectedFindingId.value = id
@@ -37,7 +48,10 @@ function selectFinding(id: string) {
   }
 }
 
-function makeDecision(action: RecommendedAction) { decide(campaign, action) }
+function makeDecision(action: RecommendedAction) {
+  decide(campaign, action)
+  showToast(`Decision recorded: ${actionLabel[action]}`, 'info')
+}
 </script>
 
 <template>
@@ -54,6 +68,9 @@ function makeDecision(action: RecommendedAction) { decide(campaign, action) }
         <span style="font-size:10px;color:var(--c-text-tertiary);letter-spacing:.08em">CASE {{ campaign.id.toUpperCase() }}</span>
       </div>
     </div>
+
+    <!-- Error banner -->
+    <ErrorBanner :errors="appErrors" @dismiss="dismissError" />
 
     <!-- Heading -->
     <div style="display:flex;justify-content:space-between;align-items:end;gap:20px;padding-bottom:24px;border-bottom:1px solid var(--c-border);margin-bottom:24px">
@@ -72,10 +89,11 @@ function makeDecision(action: RecommendedAction) { decide(campaign, action) }
       <div style="display:flex;align-items:center;gap:14px;flex-shrink:0">
         <span v-if="output" style="font-size:11px;color:var(--c-success);display:flex;align-items:center;gap:5px">
           <span class="topbar-dot" />
-          Review completed {{ output.completedAt }}
+          Review completed {{ resolvedOutput.completedAt }}
         </span>
-        <button class="btn btn-primary" @click="run">
-          {{ output ? 'Run again' : 'Run AI review' }} ✦
+        <button class="btn btn-primary" :disabled="isLoading" @click="run">
+          <span v-if="isLoading" style="width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .6s linear infinite" />
+          {{ isLoading ? 'Analyzing…' : output ? 'Run again' : 'Run AI review' }} {{ isLoading ? '' : '✦' }}
         </button>
       </div>
     </div>
@@ -169,7 +187,7 @@ function makeDecision(action: RecommendedAction) { decide(campaign, action) }
             </div>
           </div>
 
-          <div v-if="!output" style="padding:48px 24px;text-align:center">
+          <div v-if="!output && !isLoading" style="padding:48px 24px;text-align:center">
             <div style="width:44px;height:44px;border-radius:50%;background:var(--c-accent-light);color:var(--c-accent);display:grid;place-items:center;font-size:18px;margin:0 auto 14px">✦</div>
             <h3 style="margin:0;font-size:16px">Ready to inspect this dossier</h3>
             <p style="margin:8px 0 18px;color:var(--c-text-secondary);font-size:12px;max-width:340px;margin-left:auto;margin-right:auto">
@@ -178,30 +196,46 @@ function makeDecision(action: RecommendedAction) { decide(campaign, action) }
             <button class="btn btn-primary" @click="run">Analyze campaign →</button>
           </div>
 
+          <div v-if="isLoading" style="padding:32px 24px">
+            <div
+              v-for="step in loadingSteps" :key="step.label" style="display:flex;align-items:center;gap:8px;padding:5px 0;font-size:12px"
+              :style="{ color: step.status === 'done' ? 'var(--c-success)' : step.status === 'running' ? 'var(--c-text)' : 'var(--c-text-tertiary)' }"
+            >
+              <span
+                style="width:16px;height:16px;border-radius:50%;display:grid;place-items:center;font-size:9px;flex-shrink:0"
+                :style="{
+                  background: step.status === 'done' ? 'var(--c-success-light)' : step.status === 'running' ? 'var(--c-accent-light)' : 'var(--c-surface-alt)',
+                  color: step.status === 'done' ? 'var(--c-success)' : step.status === 'running' ? 'var(--c-accent)' : 'var(--c-text-tertiary)'
+                }"
+              >{{ step.status === 'done' ? '✓' : step.status === 'running' ? '✦' : '' }}</span>
+              {{ step.label }}
+            </div>
+          </div>
+
           <template v-else>
             <div style="padding:16px 18px">
               <p class="eyebrow" style="margin:0 0 6px">Executive summary</p>
-              <p style="margin:0;color:var(--c-text-secondary);font-size:13px;line-height:1.6">{{ output.summary }}</p>
+              <p style="margin:0;color:var(--c-text-secondary);font-size:13px;line-height:1.6">{{ resolvedOutput.summary }}</p>
             </div>
             <div style="display:grid;grid-template-columns:80px 1fr 120px;gap:14px;align-items:center;padding:12px 18px;background:var(--c-surface-alt);border-top:1px solid var(--c-border);margin:0 18px 16px;border-radius:var(--radius-sm)">
               <div>
                 <small style="display:block;color:var(--c-text-tertiary);font-size:10px;margin-bottom:3px">Overall risk</small>
-                <strong :style="{ color: output.riskLevel === 'high' ? 'var(--c-danger)' : output.riskLevel === 'medium' ? 'var(--c-warning)' : 'var(--c-success)' }" style="font-size:13px;text-transform:capitalize">
-                  {{ output.riskLevel }}
-                  <span style="color:var(--c-text-tertiary);font-weight:400">· {{ output.riskScore }}/100</span>
+                <strong :style="{ color: resolvedOutput.riskLevel === 'high' ? 'var(--c-danger)' : resolvedOutput.riskLevel === 'medium' ? 'var(--c-warning)' : 'var(--c-success)' }" style="font-size:13px;text-transform:capitalize">
+                  {{ resolvedOutput.riskLevel }}
+                  <span style="color:var(--c-text-tertiary);font-weight:400">· {{ resolvedOutput.riskScore }}/100</span>
                 </strong>
               </div>
               <div style="height:4px;background:var(--c-border);border-radius:4px;overflow:hidden">
                 <div
                   :style="{
-                    width: `${output.riskScore}%`,
-                    background: output.riskLevel === 'high' ? 'var(--c-danger)' : output.riskLevel === 'medium' ? 'var(--c-warning)' : 'var(--c-success)'
+                    width: `${resolvedOutput.riskScore}%`,
+                    background: resolvedOutput.riskLevel === 'high' ? 'var(--c-danger)' : resolvedOutput.riskLevel === 'medium' ? 'var(--c-warning)' : 'var(--c-success)'
                   }" style="height:100%;border-radius:4px;transition:width .3s"
                 />
               </div>
               <div>
                 <small style="display:block;color:var(--c-text-tertiary);font-size:10px;margin-bottom:3px">Recommended action</small>
-                <strong style="font-size:13px">{{ actionLabel[output.recommendedAction] }}</strong>
+                <strong style="font-size:13px">{{ actionLabel[resolvedOutput.recommendedAction] }}</strong>
               </div>
             </div>
           </template>
@@ -212,7 +246,7 @@ function makeDecision(action: RecommendedAction) { decide(campaign, action) }
           <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--c-border)">
             <div>
               <p class="eyebrow" style="margin:0 0 4px">Cross-source reasoning</p>
-              <h2 style="margin:0;font-size:16px;font-weight:600">Key findings <span style="color:var(--c-text-tertiary);font-weight:400">{{ output.findings.length }}</span></h2>
+              <h2 style="margin:0;font-size:16px;font-weight:600">Key findings <span style="color:var(--c-text-tertiary);font-weight:400">{{ resolvedOutput.findings.length }}</span></h2>
             </div>
             <span style="font-size:11px;color:var(--c-success);display:flex;align-items:center;gap:5px">
               <span class="topbar-dot" style="width:5px;height:5px" />
@@ -221,7 +255,7 @@ function makeDecision(action: RecommendedAction) { decide(campaign, action) }
           </div>
 
           <article
-            v-for="finding in output.findings"
+            v-for="finding in resolvedOutput.findings"
             :key="finding.id"
             style="display:flex;gap:12px;padding:14px 18px;border-bottom:1px solid var(--c-border);cursor:pointer;transition:background .1s"
             :style="selectedFindingId === finding.id ? { background: 'var(--c-surface-alt)' } : {}"
@@ -249,9 +283,9 @@ function makeDecision(action: RecommendedAction) { decide(campaign, action) }
             </div>
           </article>
 
-          <div v-if="output.missingInformation.length" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:12px 18px;background:var(--c-warning-light);font-size:11px">
+          <div v-if="resolvedOutput.missingInformation.length" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:12px 18px;background:var(--c-warning-light);font-size:11px">
             <strong style="color:var(--c-warning-dark)">Missing information:</strong>
-            <span v-for="item in output.missingInformation" :key="item" style="padding:2px 6px;background:white;border-radius:4px;color:var(--c-warning-dark)">{{ item }}</span>
+            <span v-for="item in resolvedOutput.missingInformation" :key="item" style="padding:2px 6px;background:white;border-radius:4px;color:var(--c-warning-dark)">{{ item }}</span>
           </div>
         </div>
 
@@ -289,15 +323,15 @@ function makeDecision(action: RecommendedAction) { decide(campaign, action) }
           <div style="padding-bottom:14px;border-bottom:1px solid var(--c-border);margin-bottom:14px">
             <small style="display:block;color:var(--c-text-tertiary);font-size:10px;margin-bottom:4px">AI risk score</small>
             <strong v-if="output" style="font-size:32px;letter-spacing:-.06em">
-              {{ output.riskScore }}<span style="font-size:14px;color:var(--c-text-tertiary);font-weight:400">/100</span>
+              {{ resolvedOutput.riskScore }}<span style="font-size:14px;color:var(--c-text-tertiary);font-weight:400">/100</span>
             </strong>
             <strong v-else style="font-size:32px;color:var(--c-text-tertiary)">—</strong>
           </div>
 
           <div v-if="output" style="padding:10px;background:var(--c-success-light);border-left:2px solid var(--c-success);border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:14px">
             <small style="display:block;color:var(--c-text-secondary);font-size:10px;margin-bottom:3px">AI recommendation</small>
-            <strong style="display:block;color:var(--c-success-dark);font-size:12px;margin-bottom:3px">{{ actionLabel[output.recommendedAction] }}</strong>
-            <p style="margin:0;color:var(--c-text-secondary);font-size:10px;line-height:1.5">Based on {{ output.findings.length }} findings and retrieved policy.</p>
+            <strong style="display:block;color:var(--c-success-dark);font-size:12px;margin-bottom:3px">{{ actionLabel[resolvedOutput.recommendedAction] }}</strong>
+            <p style="margin:0;color:var(--c-text-secondary);font-size:10px;line-height:1.5">Based on {{ resolvedOutput.findings.length }} findings and retrieved policy.</p>
           </div>
 
           <div style="display:flex;flex-direction:column;gap:6px">

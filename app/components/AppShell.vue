@@ -20,6 +20,10 @@
           Review queue
           <span class="nav-badge">27</span>
         </NuxtLink>
+        <NuxtLink to="/portfolio" class="sidebar-link">
+          <span>◎</span>
+          Portfolio radar
+        </NuxtLink>
         <NuxtLink to="/knowledge" class="sidebar-link">
           <span>◈</span>
           Policy library
@@ -27,6 +31,13 @@
         <NuxtLink to="/evals" class="sidebar-link">
           <span>◇</span>
           Evaluation
+        </NuxtLink>
+      </div>
+
+      <div class="sidebar-section" style="margin-top:auto">
+        <NuxtLink to="/campaigns/urgent-medical" class="sidebar-link" style="color:var(--c-accent-light)">
+          <span>✦</span>
+          High-risk demo
         </NuxtLink>
       </div>
 
@@ -57,5 +68,21 @@
         <slot />
       </div>
     </main>
+
+    <div class="toast-container">
+      <div
+        v-for="toast in toasts"
+        :key="toast.id"
+        class="toast"
+        :class="`toast-${toast.type}`"
+        @click="dismiss(toast.id)"
+      >
+        {{ toast.message }}
+      </div>
+    </div>
   </div>
 </template>
+
+<script setup lang="ts">
+const { toasts, dismiss } = useAppToast()
+</script>

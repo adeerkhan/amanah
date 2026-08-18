@@ -11,6 +11,15 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  runtimeConfig: {
+    openaiApiKey: '',
+    supabaseServiceKey: '',
+    public: {
+      appName: 'Amanah',
+      demoMode: true
+    }
+  },
+
   routeRules: {
     '/': { prerender: true }
   },
