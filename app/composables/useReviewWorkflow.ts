@@ -1,11 +1,12 @@
 import { campaigns } from '~/data/campaigns'
 import type { Campaign, Finding, FindingState, RecommendedAction, ReviewEvent, ReviewOutput } from '~/types/amanah'
 
-const state = reactive<Record<string, { output?: ReviewOutput, decision?: RecommendedAction, note: string, feedback?: string, events: ReviewEvent[], uploaded: boolean, findingStates: Record<string, FindingState> }>>({})
+interface WorkflowState { output?: ReviewOutput, decision?: RecommendedAction, note: string, feedback?: string, events: ReviewEvent[], uploaded: boolean, rereviews: number, findingStates: Record<string, FindingState> }
+const state = reactive<Record<string, WorkflowState>>({})
 
 function getState(id: string) {
-  state[id] ||= { note: '', events: [], uploaded: false, findingStates: {} }
-  return state[id]
+  state[id] ||= { note: '', events: [], uploaded: false, rereviews: 0, findingStates: {} }
+  return state[id]!
 }
 
 const stamp = () => new Intl.DateTimeFormat('en', { hour: '2-digit', minute: '2-digit' }).format(new Date())
@@ -32,9 +33,9 @@ export function useReviewWorkflow() {
   const setNote = (campaign: Campaign, note: string) => { getState(campaign.id).note = note }
   const setFeedback = (campaign: Campaign, feedback: string) => { getState(campaign.id).feedback = feedback; getState(campaign.id).events.unshift(event('Reviewer feedback added', feedback, 'human')) }
   const uploadEvidence = (campaign: Campaign) => { const current = getState(campaign.id); current.uploaded = true; current.events.unshift(event('New evidence uploaded', 'beneficiary_relationship_letter.pdf', 'evidence')) }
-  const rereview = (campaign: Campaign) => { const current = getState(campaign.id); current.events.unshift(event('AI re-review completed', 'Previous beneficiary mismatch reassessed', 'ai')); return review(campaign) }
+  const rereview = (campaign: Campaign) => { const current = getState(campaign.id); current.rereviews += 1; current.events.unshift(event('AI re-review completed', `Previous findings reassessed · run ${current.rereviews}`, 'ai')); return review(campaign) }
   const openFinding = (campaign: Campaign, finding: Finding) => getState(campaign.id).events.unshift(event('Reviewer opened finding', finding.title, 'human'))
-  const getWorkflow = (id: string) => getState(id)
+  const getWorkflow = (id: string): WorkflowState => getState(id)
   const priority = computed(() => [...campaigns].sort((a, b) => (b.findings.length * 10 + (b.risk === 'high' ? 30 : b.risk === 'medium' ? 15 : 0)) - (a.findings.length * 10 + (a.risk === 'high' ? 30 : a.risk === 'medium' ? 15 : 0))))
   return { runReview, decide, setNote, setFeedback, uploadEvidence, rereview, openFinding, getWorkflow, priority }
 }
