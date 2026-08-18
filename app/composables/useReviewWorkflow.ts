@@ -28,7 +28,7 @@ export function useReviewWorkflow() {
     return output
   }
   const runReview = (campaign: Campaign) => review(campaign)
-  const decide = (campaign: Campaign, action: RecommendedAction) => { const current = getState(campaign.id); current.decision = action; current.events.unshift(event(`Reviewer selected ${action.replace('_', ' ')}`, 'Human decision recorded in demo history', 'human')) }
+  const decide = (campaign: Campaign, action: RecommendedAction) => { const current = getState(campaign.id); if (!current.output) return; current.decision = action; current.events.unshift(event(`Reviewer selected ${action.replace('_', ' ')}`, 'Human decision recorded in demo history', 'human')) }
   const setNote = (campaign: Campaign, note: string) => { getState(campaign.id).note = note }
   const setFeedback = (campaign: Campaign, feedback: string) => { getState(campaign.id).feedback = feedback; getState(campaign.id).events.unshift(event('Reviewer feedback added', feedback, 'human')) }
   const uploadEvidence = (campaign: Campaign) => { const current = getState(campaign.id); current.uploaded = true; current.events.unshift(event('New evidence uploaded', 'beneficiary_relationship_letter.pdf', 'evidence')) }
