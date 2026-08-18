@@ -1,237 +1,31 @@
 <script setup lang="ts">
+import type { RecommendedAction } from '~/types/amanah'
+
 const route = useRoute()
-const { getCampaign, extractProfile, checkConsistency, retrievePolicies } = useCampaigns()
-const foundCampaign = getCampaign(route.params.id as string)
-if (!foundCampaign) throw createError({ statusCode: 404, statusMessage: 'Campaign not found' })
-const campaign = foundCampaign
-const activeDocument = ref(campaign.documents[0]!)
-const analyzed = ref(false)
-const selectedFinding = ref(campaign.findings[0])
-const profile = computed(() => extractProfile(campaign))
-const findings = computed(() => checkConsistency(campaign))
-const relevantPolicies = computed(() => retrievePolicies(findings.value))
-
-function analyze() {
-  analyzed.value = true
-}
-
-function showFinding(finding: typeof campaign.findings[number]) {
-  selectedFinding.value = finding
-  const source = campaign.documents.find(document => document.name === finding.evidence[0]?.source)
-  if (source) activeDocument.value = source
-}
+const { getCampaign, retrievePolicies } = useCampaigns()
+const { runReview, decide, setNote, setFeedback, uploadEvidence, rereview, openFinding, getWorkflow } = useReviewWorkflow()
+const campaign = getCampaign(route.params.id as string)!
+if (!campaign) throw createError({ statusCode: 404, statusMessage: 'Campaign not found' })
+const workflow = getWorkflow(campaign.id)
+const selectedDocument = ref(campaign.documents[0]!)
+const selectedFindingId = ref(campaign.findings[0]?.id)
+const output = computed(() => workflow.output)
+const selectedFinding = computed(() => output.value?.findings.find(finding => finding.id === selectedFindingId.value) || campaign.findings.find(finding => finding.id === selectedFindingId.value))
+const policies = computed(() => retrievePolicies(output.value?.findings || []))
+const actionLabel: Record<RecommendedAction, string> = { approve: 'Approve', request_information: 'Request information', escalate: 'Escalate', reject: 'Reject' }
+function run() { runReview(campaign) }
+function selectFinding(id: string) { selectedFindingId.value = id; const finding = output.value?.findings.find(item => item.id === id); if (finding) { openFinding(campaign, finding); const source = campaign.documents.find(document => document.name === finding.evidence[0]?.source); if (source) selectedDocument.value = source } }
+function makeDecision(action: RecommendedAction) { decide(campaign, action) }
 </script>
-
 <template>
-  <div
-    v-if="campaign"
-    class="mx-auto max-w-[1500px]"
-  >
-    <NuxtLink
-      to="/campaigns"
-      class="text-sm font-semibold text-[#1e7c50]"
-    >← Back to queue</NuxtLink><div class="mt-5 flex flex-col justify-between gap-4 md:flex-row md:items-end">
-      <div>
-        <div class="flex flex-wrap items-center gap-3">
-          <span
-            class="pill"
-            :class="`risk-${campaign.risk}`"
-          >{{ campaign.risk }} risk</span><span class="eyebrow">{{ campaign.category }} · {{ campaign.status.replace('_', ' ') }}</span>
-        </div><h1 class="mt-3 max-w-3xl text-3xl font-semibold tracking-tight">
-          {{ campaign.title }}
-        </h1><p class="mt-2 max-w-2xl muted">
-          {{ campaign.description }}
-        </p>
-      </div><button
-        class="rounded-lg bg-[#1e7c50] px-4 py-2.5 text-sm font-semibold text-white"
-        @click="analyze"
-      >
-        {{ analyzed ? 'Analysis complete' : 'Analyze campaign' }}
-      </button>
-    </div><div class="mt-8 grid gap-5 xl:grid-cols-[270px_minmax(0,1fr)_340px]">
-      <aside class="space-y-5">
-        <section class="panel p-5">
-          <p class="eyebrow">
-            Campaign profile
-          </p><dl class="mt-4 space-y-4 text-sm">
-            <div>
-              <dt class="muted">
-                Creator
-              </dt><dd class="mt-1 font-medium">
-                {{ campaign.creator }} <span class="muted">· {{ campaign.creatorCountry }}</span>
-              </dd>
-            </div><div>
-              <dt class="muted">
-                Beneficiary
-              </dt><dd class="mt-1 font-medium">
-                {{ campaign.beneficiary }} <span class="muted">· {{ campaign.relationship }}</span>
-              </dd>
-            </div><div>
-              <dt class="muted">
-                Goal / raised
-              </dt><dd class="mt-1 font-medium">
-                ${{ campaign.goal.toLocaleString() }} <span class="muted">/ ${{ campaign.raised.toLocaleString() }}</span>
-              </dd>
-            </div><div>
-              <dt class="muted">
-                Account age
-              </dt><dd class="mt-1 font-medium">
-                {{ campaign.accountAgeDays }} days
-              </dd>
-            </div>
-          </dl>
-        </section><section class="panel p-5">
-          <p class="eyebrow">
-            Sources
-          </p><div class="mt-4 space-y-2">
-            <button
-              v-for="document in campaign.documents"
-              :key="document.id"
-              class="flex w-full items-center justify-between rounded-lg p-2 text-left text-sm hover:bg-[#f3f7f3]"
-              :class="activeDocument.id === document.id ? 'bg-[#eaf5ed]' : ''"
-              @click="activeDocument = document"
-            >
-              <span>{{ document.name }}</span><span
-                class="size-2 rounded-full"
-                :class="document.status === 'verified' ? 'bg-[#31a66b]' : document.status === 'unclear' ? 'bg-[#e5a82f]' : 'bg-[#d25d4c]'"
-              />
-            </button>
-          </div>
-        </section>
-      </aside><main class="space-y-5">
-        <section class="panel p-5">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="eyebrow">
-                Evidence workspace
-              </p><h2 class="mt-2 text-xl font-semibold">
-                {{ activeDocument.name }}
-              </h2>
-            </div><span
-              class="pill"
-              :class="activeDocument.status === 'verified' ? 'risk-low' : activeDocument.status === 'unclear' ? 'risk-medium' : 'risk-high'"
-            >{{ activeDocument.status }}</span>
-          </div><pre class="mt-5 whitespace-pre-wrap rounded-xl bg-[#f6f8f5] p-5 text-sm leading-7 text-[#39473d]">{{ activeDocument.content }}</pre><div class="mt-5 grid gap-3 md:grid-cols-2">
-            <div class="rounded-lg border border-[#dfe6df] p-4">
-              <p class="eyebrow">
-                Campaign information
-              </p><p class="mt-2 font-medium">
-                Beneficiary: {{ campaign.beneficiary }}
-              </p>
-            </div><div class="rounded-lg border border-[#dfe6df] p-4">
-              <p class="eyebrow">
-                Selected evidence
-              </p><p class="mt-2 font-medium">
-                {{ selectedFinding?.evidence[0]?.quote || 'No contradiction selected' }}
-              </p>
-            </div>
-          </div>
-        </section><section class="panel p-5">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="eyebrow">
-                Phase 3 + 4
-              </p><h2 class="mt-2 text-xl font-semibold">
-                Structured AI analysis
-              </h2>
-            </div><span
-              v-if="analyzed"
-              class="text-sm font-semibold text-[#1e7c50]"
-            >Profile validated</span>
-          </div><div
-            v-if="!analyzed"
-            class="mt-5 rounded-xl border border-dashed border-[#cbd8cc] p-6 text-sm muted"
-          >
-            Analyze the dossier to extract structured entities and compare sources.
-          </div><pre
-            v-else
-            class="mt-5 overflow-auto rounded-xl bg-[#17211b] p-5 text-xs leading-6 text-[#d9eee0]"
-          >{{ JSON.stringify(profile, null, 2) }}</pre>
-        </section><section class="panel p-5">
-          <p class="eyebrow">
-            Cross-source findings
-          </p><h2 class="mt-2 text-xl font-semibold">
-            Evidence-backed inconsistencies
-          </h2><div
-            v-if="analyzed"
-            class="mt-5 space-y-3"
-          >
-            <button
-              v-for="finding in findings"
-              :key="finding.id"
-              class="w-full rounded-xl border border-[#dfe6df] p-4 text-left hover:border-[#8bc59d]"
-              @click="showFinding(finding)"
-            >
-              <div class="flex flex-wrap items-center justify-between gap-2">
-                <span class="font-semibold">{{ finding.title }}</span><span
-                  class="pill"
-                  :class="`risk-${finding.severity}`"
-                >{{ finding.severity }} · {{ Math.round(finding.confidence * 100) }}% confidence</span>
-              </div><p class="mt-2 text-sm leading-6 muted">
-                {{ finding.explanation }}
-              </p><p class="mt-3 text-xs font-medium text-[#1e7c50]">
-                Evidence: {{ finding.evidence.map(e => e.source).join(' + ') }}
-              </p>
-            </button>
-          </div><p
-            v-else
-            class="mt-5 text-sm muted"
-          >
-            Findings appear after structured analysis.
-          </p>
-        </section>
-      </main><aside class="space-y-5">
-        <section class="panel border-l-4 border-l-[#1e7c50] p-5">
-          <p class="eyebrow">
-            Relevant policy · Phase 5
-          </p><div
-            v-if="analyzed && relevantPolicies.length"
-            class="mt-4 space-y-4"
-          >
-            <article
-              v-for="policy in relevantPolicies"
-              :key="policy.id"
-            >
-              <h2 class="font-semibold">
-                {{ policy.title }}
-              </h2><p class="mt-1 text-xs font-semibold text-[#1e7c50]">
-                {{ policy.section }}
-              </p><p class="mt-2 text-sm leading-6 muted">
-                {{ policy.summary }}
-              </p><details class="mt-3 text-sm">
-                <summary class="cursor-pointer font-semibold">
-                  View guidance
-                </summary><ul class="mt-2 space-y-2 pl-4 text-sm muted">
-                  <li
-                    v-for="item in policy.guidance"
-                    :key="item"
-                  >
-                    {{ item }}
-                  </li>
-                </ul>
-              </details>
-            </article>
-          </div><p
-            v-else
-            class="mt-4 text-sm muted"
-          >
-            Run analysis to retrieve the operational policy relevant to each finding.
-          </p>
-        </section><section class="panel p-5">
-          <p class="eyebrow">
-            AI boundary
-          </p><p class="mt-3 text-sm leading-6 muted">
-            Amanah recommends next steps; it never approves, rejects, freezes, or moves funds.
-          </p><div
-            v-if="selectedFinding"
-            class="mt-4 rounded-lg bg-[#fff8e8] p-4 text-sm"
-          >
-            <strong>Suggested next step</strong><p class="mt-1 muted">
-              {{ selectedFinding.recommendation }}
-            </p>
-          </div>
-        </section>
-      </aside>
+  <div class="review-page">
+    <div class="review-top"><NuxtLink to="/campaigns" class="back-link">← Queue</NuxtLink><div class="review-top-actions"><NuxtLink :to="`/campaigns/${campaign.id}/activity`" class="secondary-btn">Activity <span>↗</span></NuxtLink><span class="case-id">CASE {{ campaign.id.toUpperCase() }}</span></div></div>
+    <section class="review-heading"><div><div class="heading-meta"><span class="pill" :class="`risk-${campaign.risk}`">{{ campaign.risk }} attention</span><span>{{ campaign.category }} / Submitted 2h ago</span></div><h1>{{ campaign.title }}</h1><p>{{ campaign.description }}</p></div><div class="review-run"><span v-if="output" class="completed-label"><i /> Review completed {{ output.completedAt }}</span><button class="primary-btn" @click="run">{{ output ? 'Run again' : 'Run AI review' }} <span>✦</span></button></div></section>
+    <div v-if="workflow.uploaded" class="rereview-banner"><span class="banner-icon">↻</span><div><strong>New evidence is ready for re-review</strong><small>beneficiary_relationship_letter.pdf was uploaded to this case</small></div><button class="primary-btn" @click="rereview(campaign)">Run re-review <span>→</span></button></div>
+    <div class="review-layout">
+      <aside class="case-sidebar"><section class="case-card panel"><p class="eyebrow">Case profile</p><div class="person-row"><span class="person-avatar">AR</span><div><strong>{{ campaign.creator }}</strong><small>Creator · {{ campaign.creatorCountry }}</small></div></div><dl class="case-facts"><div><dt>Beneficiary</dt><dd>{{ campaign.beneficiary }}</dd></div><div><dt>Relationship</dt><dd>{{ campaign.relationship }}</dd></div><div><dt>Goal</dt><dd>${{ campaign.goal.toLocaleString() }}</dd></div><div><dt>Raised</dt><dd>${{ campaign.raised.toLocaleString() }}</dd></div><div><dt>Account age</dt><dd>{{ campaign.accountAgeDays }} days</dd></div></dl></section><section class="case-card panel"><div class="card-title-row"><p class="eyebrow">Evidence dossier</p><span>{{ campaign.documents.length }}</span></div><button v-for="document in campaign.documents" :key="document.id" class="document-item" :class="selectedDocument.id === document.id ? 'selected' : ''" @click="selectedDocument = document"><span class="file-icon">{{ document.type === 'Medical evidence' ? '＋' : '▤' }}</span><span><strong>{{ document.name }}</strong><small>{{ document.type }}</small></span><i :class="`status-${document.status}`" /></button><label class="upload-link">＋ Upload new evidence<input type="file" hidden @change="uploadEvidence(campaign)"></label></section></aside>
+      <main class="review-center"><section class="ai-intro panel"><div class="ai-intro-top"><div class="ai-label"><span>✦</span><div><p class="eyebrow">Amanah analysis</p><h2>Evidence review</h2></div></div><div class="tool-tags"><span>Structured extraction</span><span>Entity comparison</span><span>Policy retrieval</span></div></div><div v-if="!output" class="empty-review"><div class="empty-orb">✦</div><h3>Ready to inspect this dossier</h3><p>Run the review to extract entities, compare supplied sources, and retrieve the relevant operating policy.</p><button class="primary-btn" @click="run">Analyze campaign <span>→</span></button></div><template v-else><div class="summary-block"><p class="eyebrow">Executive summary</p><p>{{ output.summary }}</p></div><div class="risk-strip"><div><small>Overall risk</small><strong :class="`risk-text-${output.riskLevel}`">{{ output.riskLevel }} <span>· {{ output.riskScore }}/100</span></strong></div><div class="risk-meter"><i :style="{ width: `${output.riskScore}%` }" :class="`meter-${output.riskLevel}`" /></div><div><small>Recommended action</small><strong>{{ actionLabel[output.recommendedAction] }}</strong></div></div></template></section><section v-if="output" class="findings-section"><div class="section-head compact"><div><p class="eyebrow">Cross-source reasoning</p><h2>Key findings <span>{{ output.findings.length }}</span></h2></div><span class="grounded"><i /> All findings grounded</span></div><article v-for="finding in output.findings" :key="finding.id" class="finding-card panel" :class="selectedFindingId === finding.id ? 'finding-selected' : ''" @click="selectFinding(finding.id)"><div class="finding-marker" :class="`marker-${finding.severity}`">{{ finding.severity === 'high' ? '!' : finding.severity === 'medium' ? '·' : '✓' }}</div><div class="finding-body"><div class="finding-title"><strong>{{ finding.title }}</strong><span class="pill" :class="`risk-${finding.severity}`">{{ finding.severity }} · {{ Math.round(finding.confidence * 100) }}%</span></div><p>{{ finding.explanation }}</p><div class="evidence-quotes"><span v-for="evidence in finding.evidence" :key="evidence.source"><b>{{ evidence.source }}</b> “{{ evidence.quote }}”</span></div><small class="recommendation">Recommendation: {{ finding.recommendation }}</small></div><span class="finding-chevron">›</span></article><div v-if="output.missingInformation.length" class="missing-box"><strong>Missing information</strong><span v-for="item in output.missingInformation" :key="item">{{ item }}</span></div></section><section v-if="output" class="evidence-preview panel"><div class="section-head compact"><div><p class="eyebrow">Source inspection</p><h2>{{ selectedDocument.name }}</h2></div><span class="pill" :class="selectedDocument.status === 'verified' ? 'risk-low' : 'risk-medium'">{{ selectedDocument.status }}</span></div><pre>{{ selectedDocument.content }}</pre><div v-if="selectedFinding" class="compare-row"><div><small>Finding selected</small><strong>{{ selectedFinding.title }}</strong></div><div><small>Source location</small><strong>{{ selectedFinding.evidence[0]?.location }}</strong></div></div></section></main>
+      <aside class="decision-sidebar"><section class="decision-card panel"><div class="decision-head"><p class="eyebrow">Human decision</p><span class="lock">⌁ Reviewer only</span></div><div class="decision-score"><small>AI risk score</small><strong v-if="output">{{ output.riskScore }}<em>/100</em></strong><strong v-else>—</strong><span v-if="output" class="pill" :class="`risk-${output.riskLevel}`">{{ output.riskLevel }} attention</span></div><div class="recommendation-box" v-if="output"><small>AI recommendation</small><strong>{{ actionLabel[output.recommendedAction] }}</strong><p>Based on {{ output.findings.length }} findings and retrieved policy guidance.</p></div><div class="decision-actions"><button v-for="action in (['approve', 'request_information', 'escalate', 'reject'] as RecommendedAction[])" :key="action" :class="['decision-btn', action === output?.recommendedAction ? 'suggested' : '', action === workflow.decision ? 'chosen' : '']" @click="makeDecision(action)">{{ actionLabel[action] }}<span v-if="action === output?.recommendedAction">Recommended</span></button></div><div v-if="workflow.decision" class="decision-record">✓ Decision recorded: <strong>{{ actionLabel[workflow.decision] }}</strong></div></section><section class="feedback-card panel"><p class="eyebrow">Reviewer feedback</p><select :value="workflow.feedback" aria-label="Feedback" @change="setFeedback(campaign, ($event.target as HTMLSelectElement).value)"><option value="">How was the AI review?</option><option>AI was useful</option><option>AI was too cautious</option><option>AI was too aggressive</option><option>AI missed something</option><option>Incorrect evidence</option><option>Incorrect recommendation</option></select><textarea :value="workflow.note" placeholder="Add a note for the review record..." @input="setNote(campaign, ($event.target as HTMLTextAreaElement).value)" /><p class="feedback-hint">Your feedback improves future review quality.</p></section><section v-if="policies.length" class="policy-card panel"><p class="eyebrow">Retrieved policy</p><div v-for="policy in policies.slice(0, 1)" :key="policy.id"><h3>{{ policy.title }}</h3><span>{{ policy.section }}</span><p>{{ policy.summary }}</p><details><summary>View policy guidance</summary><ul><li v-for="item in policy.guidance" :key="item">{{ item }}</li></ul></details></div></section></aside>
     </div>
   </div>
 </template>

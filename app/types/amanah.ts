@@ -36,3 +36,7 @@ export interface Campaign {
   findings: Finding[]
 }
 export interface Policy { id: string, title: string, section: string, summary: string, keywords: string[], guidance: string[] }
+export type RecommendedAction = 'approve' | 'request_information' | 'escalate' | 'reject'
+export type FindingState = 'open' | 'resolved' | 'still_unresolved' | 'superseded'
+export interface ReviewOutput { riskLevel: Risk, riskScore: number, summary: string, findings: Finding[], missingInformation: string[], recommendedAction: RecommendedAction, completedAt: string }
+export interface ReviewEvent { id: string, label: string, detail: string, timestamp: string, tone: 'ai' | 'human' | 'evidence' }
