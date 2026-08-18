@@ -1,26 +1,13 @@
 <script setup lang="ts">
 const route = useRoute()
+const { getCampaign } = useCampaigns()
+const { getWorkflow } = useReviewWorkflow()
+const campaign = getCampaign(route.params.id as string)!
+if (!campaign) throw createError({ statusCode: 404, statusMessage: 'Campaign not found' })
+const workflow = getWorkflow(campaign.id)
+const baseline = [{ id: 'queue', label: 'Case added to review queue', detail: 'Demo campaign dossier indexed', timestamp: '09:14', tone: 'evidence' as const }, { id: 'ingest', label: 'Documents ingested', detail: `${campaign.documents.length} source documents available`, timestamp: '09:15', tone: 'evidence' as const }]
+const events = computed(() => [...workflow.events, ...baseline])
 </script>
-
 <template>
-  <div>
-    <NuxtLink
-      :to="`/campaigns/${route.params.id}`"
-      class="font-semibold text-[#1e7c50]"
-    >← Return to review</NuxtLink><h1 class="mt-5 text-3xl font-semibold">
-      Review activity
-    </h1><div class="panel mt-8 max-w-2xl divide-y divide-[#e7ece7]">
-      <div
-        v-for="event in ['Campaign added to review queue', 'Documents indexed for comparison', 'Structured profile available', 'Policy retrieval ready']"
-        :key="event"
-        class="flex gap-4 p-5 text-sm"
-      >
-        <span class="mt-1 size-2 rounded-full bg-[#1e7c50]" /><div>
-          <strong>{{ event }}</strong><p class="mt-1 muted">
-            18 Aug 2026 · Demo environment
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="activity-page"><NuxtLink :to="`/campaigns/${campaign.id}`" class="back-link">← Return to case</NuxtLink><div class="activity-heading"><div><p class="eyebrow">Phase 8 · Audit trail</p><h1>Review activity</h1><p>Every AI and reviewer interaction for <strong>{{ campaign.title }}</strong>.</p></div><span class="case-id">{{ events.length }} events recorded</span></div><section class="timeline panel"><div v-for="item in events" :key="item.id" class="timeline-item"><span class="timeline-dot" :class="`timeline-${item.tone}`" /><div class="timeline-copy"><div><strong>{{ item.label }}</strong><time>{{ item.timestamp }}</time></div><p>{{ item.detail }}</p></div></div></section></div>
 </template>
