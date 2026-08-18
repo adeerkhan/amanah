@@ -14,8 +14,8 @@ const events = computed(() => [...workflow.events, ...baseline])
 
 <template>
   <div>
-    <NuxtLink :to="`/campaigns/${campaign.id}`" style="font-size:12px;color:var(--c-text-secondary)">
-      ← Return to case
+    <NuxtLink :to="`/campaigns/${campaign.id}`" style="font-size:12px;color:var(--c-text-secondary);display:flex;align-items:center;gap:4px">
+      <Icon name="lucide:arrow-left" :size="14" /> Return to case
     </NuxtLink>
 
     <div style="display:flex;justify-content:space-between;align-items:end;margin:24px 0 20px">
@@ -26,7 +26,9 @@ const events = computed(() => [...workflow.events, ...baseline])
           Every AI and reviewer interaction for <strong>{{ campaign.title }}</strong>.
         </p>
       </div>
-      <span style="font-size:11px;color:var(--c-text-tertiary)">{{ events.length }} events recorded</span>
+      <span style="font-size:11px;color:var(--c-text-tertiary);display:flex;align-items:center;gap:4px">
+        <Icon name="lucide:clock" :size="12" /> {{ events.length }} events recorded
+      </span>
     </div>
 
     <div class="panel" style="max-width:680px;padding:12px 20px">

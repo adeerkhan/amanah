@@ -1,16 +1,16 @@
 # Graph Report - amanah  (2026-08-18)
 
 ## Corpus Check
-- 25 files · ~11,968 words
+- 32 files · ~14,683 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 358 nodes · 338 edges · 46 communities (40 shown, 6 thin omitted)
+- 394 nodes · 367 edges · 56 communities (40 shown, 16 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `25ea8423`
+- Built from commit: `198bea98`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -49,22 +49,33 @@
 - policies.ts
 - knowledge.vue
 - tsconfig.json
+- AppShell.vue
 - activity.vue
 - evidence.vue
 - evals.vue
 - index.vue
+- evaluation.ts
+- 37. Failure Handling
+- useErrorHandler.ts
+- usePortfolioRadar.ts
+- useProgressiveLoading.ts
+- ErrorBanner.vue
+- portfolio.vue
+- 3. Most Important Feature: Evidence-Based AI
+- 8. Dashboard
+- LaunchGood Applied AI Engineer Prototype
 
 ## God Nodes (most connected - your core abstractions)
 1. `46. Priority Order` - 10 edges
 2. `35. Agent Instructions` - 8 edges
 3. `41. Five-Minute Demo Flow` - 8 edges
-4. `scripts` - 7 edges
-5. `Phase 0 — Project Initialization` - 7 edges
-6. `Phase 2 — Evidence Workspace` - 7 edges
-7. `Phase 3 — Structured AI Extraction` - 7 edges
-8. `Phase 4 — Entity Resolution & Consistency Checking` - 7 edges
-9. `Failure scenarios` - 7 edges
-10. `Agent Delegation Strategy` - 7 edges
+4. `Amanah` - 8 edges
+5. `scripts` - 7 edges
+6. `Phase 0 — Project Initialization` - 7 edges
+7. `Phase 2 — Evidence Workspace` - 7 edges
+8. `Phase 3 — Structured AI Extraction` - 7 edges
+9. `Phase 4 — Entity Resolution & Consistency Checking` - 7 edges
+10. `Failure scenarios` - 7 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `useReviewWorkflow()` --references--> `RecommendedAction`  [EXTRACTED]
@@ -73,23 +84,23 @@
 ## Import Cycles
 - None detected.
 
-## Communities (46 total, 6 thin omitted)
+## Communities (56 total, 16 thin omitted)
 
 ### Community 0 - "LaunchGood Applied AI Engineer — AI Campaign Trust & Safety Review Copilot.md"
-Cohesion: 0.04
-Nodes (48): 10. Evidence Viewer, 11. AI Pipeline, 12. Structured Extraction, 13. Entity Resolution, 14. Policy Retrieval, 15. Agent Architecture, 16. Tool Interfaces, 17. Real AI Responsibility (+40 more)
+Cohesion: 0.05
+Nodes (38): 10. Evidence Viewer, 11. AI Pipeline, 12. Structured Extraction, 13. Entity Resolution, 14. Policy Retrieval, 15. Agent Architecture, 16. Tool Interfaces, 17. Real AI Responsibility (+30 more)
 
 ### Community 1 - "Amanah — Phased Product Development Plan.md"
-Cohesion: 0.06
-Nodes (35): Amanah — Phased Product Development Plan, Build, Critical Product Principle, Dataset, Definition of Done, Definition of Done, Definition of Done, Definition of Done (+27 more)
+Cohesion: 0.05
+Nodes (42): Agent Delegation Strategy, Agent Group 1 — Product Foundation, Agent Group 2 — AI Core, Agent Group 3 — Workflow, Agent Group 4 — Intelligence, Agent Group 5 — Production, Agent Group 6 — Demo, Amanah — Phased Product Development Plan (+34 more)
 
 ### Community 2 - "package.json"
 Cohesion: 0.10
 Nodes (20): eslint, @nuxt/eslint, devDependencies, eslint, @nuxt/eslint, typescript, vue-tsc, name (+12 more)
 
 ### Community 3 - "[id].vue"
-Cohesion: 0.14
-Nodes (10): actionLabel, { getCampaign, retrievePolicies }, output, policies, route, { runReview, decide, setNote, setFeedback, uploadEvidence, rereview, openFinding, getWorkflow }, selectedDocument, selectedFinding (+2 more)
+Cohesion: 0.11
+Nodes (14): actionLabel, { errors: appErrors, dismissError }, { getCampaign, retrievePolicies }, output, policies, resolvedOutput, route, { runReview, decide, setNote, setFeedback, uploadEvidence, rereview, openFinding, getWorkflow } (+6 more)
 
 ### Community 4 - "Phase 3 — Structured AI Extraction"
 Cohesion: 0.18
@@ -136,8 +147,8 @@ Cohesion: 0.25
 Nodes (7): github>nuxt/renovate-config-nuxt, pnpmDedupe, extends, lockFileMaintenance, enabled, packageRules, postUpdateOptions
 
 ### Community 15 - "Agent Delegation Strategy"
-Cohesion: 0.29
-Nodes (7): Agent Delegation Strategy, Agent Group 1 — Product Foundation, Agent Group 2 — AI Core, Agent Group 3 — Workflow, Agent Group 4 — Intelligence, Agent Group 5 — Production, Agent Group 6 — Demo
+Cohesion: 0.33
+Nodes (6): Build, Definition of Done, Important behavior, Objective, Phase 7 — Human-in-the-Loop Workflow, Reviewer feedback
 
 ### Community 16 - "Phase 2 — Evidence Workspace"
 Cohesion: 0.29
@@ -156,8 +167,8 @@ Cohesion: 0.29
 Nodes (7): 9. Campaign Review Workspace, AI Recommendation, Center, Executive Summary, Key Findings, Left, Right
 
 ### Community 20 - "Amanah"
-Cohesion: 0.29
-Nodes (6): AI responsibility, Amanah, Checks, Current scope, Data safety, Run locally
+Cohesion: 0.15
+Nodes (12): AI responsibility, Amanah, Architecture, Checks, Core Workflow (Phases 0–10), Data safety, Deployment, Features (+4 more)
 
 ### Community 21 - "Phase 6 — AI Review Engine"
 Cohesion: 0.33
@@ -168,12 +179,8 @@ Cohesion: 0.33
 Nodes (6): Build, Definition of Done, Objective, Phase 5 — Policy Knowledge Base, Retrieval pipeline, UI
 
 ### Community 23 - "Phase 7 — Human-in-the-Loop Workflow"
-Cohesion: 0.33
-Nodes (6): Build, Dashboard, Definition of Done, Important, Objective, Phase 10 — Review Queue Intelligence
-
-### Community 24 - "Phase 12 — Evaluation Framework"
 Cohesion: 0.40
-Nodes (5): Architecture, Definition of Done, Deployment checklist, Environment variables, Phase 16 — Production Deployment
+Nodes (5): Definition of Done, Objective, Optional relationship graph, Phase 11 — Portfolio Risk Radar, Signals
 
 ### Community 25 - "Phase 9 — Re-review Workflow"
 Cohesion: 0.33
@@ -199,29 +206,37 @@ Nodes (4): 2. Core User Story, AI Risk Assessment, Campaign Summary, Verificatio
 Cohesion: 0.29
 Nodes (6): baseline, events, { getCampaign }, { getWorkflow }, route, workflow
 
+### Community 38 - "evals.vue"
+Cohesion: 0.33
+Nodes (4): currentStep, results, running, steps
+
 ### Community 39 - "index.vue"
 Cohesion: 0.50
 Nodes (3): { priority }, queue, stats
 
+### Community 47 - "37. Failure Handling"
+Cohesion: 0.50
+Nodes (4): 37. Failure Handling, Conflicting evidence, Document unreadable, Model unavailable
+
 ## Knowledge Gaps
-- **268 isolated node(s):** `WorkflowState`, `state`, `campaigns`, `policies`, `route` (+263 more)
+- **290 isolated node(s):** `{ toasts, dismiss }`, `emit`, `AppToast`, `toasts`, `AppError` (+285 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Phase 3 — Structured AI Extraction` connect `Phase 3 — Structured AI Extraction` to `Amanah — Phased Product Development Plan.md`?**
-  _High betweenness centrality (0.021) - this node is a cross-community bridge._
+  _High betweenness centrality (0.018) - this node is a cross-community bridge._
 - **Why does `Phase 13 — Failure & Reliability Engineering` connect `Failure scenarios` to `Amanah — Phased Product Development Plan.md`?**
-  _High betweenness centrality (0.021) - this node is a cross-community bridge._
+  _High betweenness centrality (0.018) - this node is a cross-community bridge._
 - **Why does `Phase 1 — Operations Dashboard` connect `Phase 1 — Operations Dashboard` to `Amanah — Phased Product Development Plan.md`?**
-  _High betweenness centrality (0.015) - this node is a cross-community bridge._
-- **What connects `WorkflowState`, `state`, `campaigns` to the rest of the system?**
-  _268 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _High betweenness centrality (0.013) - this node is a cross-community bridge._
+- **What connects `{ toasts, dismiss }`, `emit`, `AppToast` to the rest of the system?**
+  _290 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `LaunchGood Applied AI Engineer — AI Campaign Trust & Safety Review Copilot.md` be split into smaller, more focused modules?**
-  _Cohesion score 0.04081632653061224 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05128205128205128 - nodes in this community are weakly interconnected._
 - **Should `Amanah — Phased Product Development Plan.md` be split into smaller, more focused modules?**
-  _Cohesion score 0.05555555555555555 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.046511627906976744 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.09523809523809523 - nodes in this community are weakly interconnected._

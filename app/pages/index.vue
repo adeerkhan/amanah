@@ -3,10 +3,10 @@ const { priority } = useReviewWorkflow()
 const queue = computed(() => priority.value)
 
 const stats = [
-  { label: 'Pending reviews', value: '27', change: '+4 today', accent: false },
-  { label: 'High attention', value: '04', change: '2 escalated', accent: true },
-  { label: 'Needs evidence', value: '09', change: '34% of queue', accent: false },
-  { label: 'Median review time', value: '11m', change: '↓ 18% this week', accent: false }
+  { label: 'Pending reviews', value: '27', change: '+4 today', icon: 'lucide:clock', accent: false },
+  { label: 'High attention', value: '04', change: '2 escalated', icon: 'lucide:alert-triangle', accent: true },
+  { label: 'Needs evidence', value: '09', change: '34% of queue', icon: 'lucide:file-question', accent: false },
+  { label: 'Median review time', value: '11m', change: '↓ 18% this week', icon: 'lucide:timer', accent: false }
 ]
 </script>
 
@@ -23,12 +23,13 @@ const stats = [
         </p>
       </div>
       <div style="display:flex;align-items:center;gap:12px">
-        <span style="font-size:11px;color:var(--c-text-tertiary)">
-          <span class="topbar-dot" style="display:inline-block;vertical-align:middle;margin-right:5px" />
+        <span style="font-size:11px;color:var(--c-text-tertiary);display:flex;align-items:center;gap:6px">
+          <span class="topbar-dot" style="display:inline-block" />
           All systems operational
         </span>
         <NuxtLink to="/campaigns/urgent-medical" class="btn btn-primary">
-          Open high-risk demo →
+          <Icon name="lucide:external-link" :size="14" />
+          Open high-risk demo
         </NuxtLink>
       </div>
     </div>
@@ -37,11 +38,19 @@ const stats = [
       <article
         v-for="stat in stats"
         :key="stat.label"
-        class="panel"
-        style="padding:16px 18px"
+        class="panel stat-card"
       >
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
           <span style="font-size:12px;color:var(--c-text-secondary)">{{ stat.label }}</span>
+          <span
+            style="width:28px;height:28px;border-radius:var(--radius-sm);display:grid;place-items:center"
+            :style="{
+              background: stat.accent ? 'var(--c-danger-light)' : 'var(--c-surface-alt)',
+              color: stat.accent ? 'var(--c-danger)' : 'var(--c-text-tertiary)'
+            }"
+          >
+            <Icon :name="stat.icon" :size="14" />
+          </span>
         </div>
         <strong
           style="display:block;font-size:30px;font-weight:600;letter-spacing:-.04em;margin-bottom:4px"
@@ -59,7 +68,8 @@ const stats = [
             <h2 style="margin:0;font-size:18px;font-weight:600">Cases needing attention</h2>
           </div>
           <NuxtLink to="/campaigns" class="btn btn-secondary" style="font-size:11px;padding:5px 10px">
-            View all →
+            View all
+            <Icon name="lucide:arrow-right" :size="12" />
           </NuxtLink>
         </div>
 
@@ -74,9 +84,7 @@ const stats = [
           v-for="(campaign, index) in queue"
           :key="campaign.id"
           :to="`/campaigns/${campaign.id}`"
-          style="display:grid;grid-template-columns:1fr 1fr 70px 40px;gap:12px;align-items:center;padding:14px 20px;border-bottom:1px solid var(--c-border);font-size:12px;transition:background .1s"
-          @mouseenter="($event.target as HTMLElement).style.background='var(--c-surface-alt)'"
-          @mouseleave="($event.target as HTMLElement).style.background=''"
+          class="queue-row"
         >
           <div style="display:flex;align-items:center;gap:10px;min-width:0">
             <span style="font-size:11px;color:var(--c-text-tertiary);flex-shrink:0">{{ String(index + 1).padStart(2, '0') }}</span>
@@ -94,9 +102,7 @@ const stats = [
       </div>
 
       <aside style="display:grid;gap:16px;align-content:start">
-        <div
-          style="border-radius:var(--radius-lg);padding:24px;color:var(--c-text-inverse);background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);position:relative;overflow:hidden"
-        >
+        <div class="radar-card">
           <p class="eyebrow" style="color:#64748b;margin:0 0 12px">Portfolio radar</p>
           <h2 style="margin:0 0 8px;font-size:18px;font-weight:600;line-height:1.3">
             A pattern worth<br>a closer look
@@ -104,8 +110,8 @@ const stats = [
           <p style="margin:0;color:#94a3b8;font-size:12px;line-height:1.6">
             3 cases share beneficiary evidence gaps. This is a prioritization signal, not an accusation.
           </p>
-          <NuxtLink to="/campaigns" style="display:inline-block;margin-top:16px;color:var(--c-accent);font-size:11px;font-weight:600">
-            Inspect cases →
+          <NuxtLink to="/portfolio" style="display:inline-flex;align-items:center;gap:4px;margin-top:16px;color:var(--c-accent);font-size:11px;font-weight:600">
+            Inspect cases <Icon name="lucide:arrow-right" :size="12" />
           </NuxtLink>
           <div
             style="position:absolute;right:-18px;bottom:-18px;width:80px;height:80px;border-radius:50%;border:1px solid rgba(255,255,255,.12);display:grid;place-items:center"
@@ -131,3 +137,26 @@ const stats = [
     </div>
   </div>
 </template>
+
+<style scoped>
+.stat-card { padding: 16px 18px; }
+.queue-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 70px 40px;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--c-border);
+  font-size: 12px;
+  transition: background .1s;
+}
+.queue-row:hover { background: var(--c-surface-alt); }
+.radar-card {
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  color: var(--c-text-inverse);
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  position: relative;
+  overflow: hidden;
+}
+</style>

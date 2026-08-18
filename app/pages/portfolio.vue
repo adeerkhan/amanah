@@ -12,15 +12,24 @@ const { signals, portfolioStats } = usePortfolioRadar()
 
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px">
       <div class="panel" style="padding:16px">
-        <small style="display:block;color:var(--c-text-secondary);font-size:11px;margin-bottom:6px">Total campaigns</small>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <Icon name="lucide:folder" :size="14" style="color:var(--c-text-tertiary)" />
+          <small style="color:var(--c-text-secondary);font-size:11px">Total campaigns</small>
+        </div>
         <strong style="font-size:28px;letter-spacing:-.04em">{{ portfolioStats.total }}</strong>
       </div>
       <div class="panel" style="padding:16px">
-        <small style="display:block;color:var(--c-text-secondary);font-size:11px;margin-bottom:6px">Total findings</small>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <Icon name="lucide:alert-circle" :size="14" style="color:var(--c-danger)" />
+          <small style="color:var(--c-text-secondary);font-size:11px">Total findings</small>
+        </div>
         <strong style="font-size:28px;letter-spacing:-.04em;color:var(--c-danger)">{{ portfolioStats.totalFindings }}</strong>
       </div>
       <div class="panel" style="padding:16px">
-        <small style="display:block;color:var(--c-text-secondary);font-size:11px;margin-bottom:6px">Documents indexed</small>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <Icon name="lucide:file-text" :size="14" style="color:var(--c-text-tertiary)" />
+          <small style="color:var(--c-text-secondary);font-size:11px">Documents indexed</small>
+        </div>
         <strong style="font-size:28px;letter-spacing:-.04em">{{ portfolioStats.totalDocuments }}</strong>
       </div>
     </div>
@@ -28,7 +37,14 @@ const { signals, portfolioStats } = usePortfolioRadar()
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:28px">
       <article v-for="signal in signals" :key="signal.id" class="panel" style="padding:16px">
         <div style="display:flex;justify-content:space-between;align-items:start;gap:8px;margin-bottom:8px">
-          <h3 style="margin:0;font-size:13px">{{ signal.label }}</h3>
+          <h3 style="margin:0;font-size:13px;display:flex;align-items:center;gap:6px">
+            <Icon
+              :name="signal.severity === 'critical' ? 'lucide:alert-triangle' : signal.severity === 'warning' ? 'lucide:alert-circle' : 'lucide:info'"
+              :size="14"
+              :style="{ color: signal.severity === 'critical' ? 'var(--c-danger)' : signal.severity === 'warning' ? 'var(--c-warning)' : 'var(--c-info)' }"
+            />
+            {{ signal.label }}
+          </h3>
           <span
             style="width:28px;height:28px;border-radius:var(--radius-sm);display:grid;place-items:center;font-size:13px;font-weight:700;flex-shrink:0"
             :style="{
@@ -43,16 +59,19 @@ const { signals, portfolioStats } = usePortfolioRadar()
             v-for="id in signal.campaignIds"
             :key="id"
             :to="`/campaigns/${id}`"
-            style="padding:3px 8px;background:var(--c-surface-alt);border-radius:4px;font-size:10px;color:var(--c-accent-dark);font-weight:500"
+            style="padding:3px 8px;background:var(--c-surface-alt);border-radius:4px;font-size:10px;color:var(--c-accent-dark);font-weight:500;display:inline-flex;align-items:center;gap:4px"
           >
-            {{ id }}
+            <Icon name="lucide:external-link" :size="10" /> {{ id }}
           </NuxtLink>
         </div>
       </article>
     </div>
 
     <div class="panel" style="padding:20px">
-      <h2 style="margin:0 0 14px;font-size:16px;font-weight:600">Risk distribution</h2>
+      <h2 style="margin:0 0 14px;font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px">
+        <Icon name="lucide:bar-chart-3" :size="18" style="color:var(--c-text-tertiary)" />
+        Risk distribution
+      </h2>
       <div style="display:flex;gap:12px;align-items:center">
         <div style="flex:1;height:8px;background:var(--c-surface-alt);border-radius:8px;overflow:hidden;display:flex">
           <div style="background:var(--c-danger)" :style="{ width: `${(portfolioStats.high / portfolioStats.total) * 100}%` }" />
@@ -60,9 +79,9 @@ const { signals, portfolioStats } = usePortfolioRadar()
           <div style="background:var(--c-success)" :style="{ width: `${(portfolioStats.low / portfolioStats.total) * 100}%` }" />
         </div>
         <div style="display:flex;gap:14px;font-size:11px">
-          <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--c-danger);margin-right:4px;vertical-align:middle" />{{ portfolioStats.high }} high</span>
-          <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--c-warning);margin-right:4px;vertical-align:middle" />{{ portfolioStats.medium }} medium</span>
-          <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--c-success);margin-right:4px;vertical-align:middle" />{{ portfolioStats.low }} low</span>
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:var(--c-danger)" />{{ portfolioStats.high }} high</span>
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:var(--c-warning)" />{{ portfolioStats.medium }} medium</span>
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:var(--c-success)" />{{ portfolioStats.low }} low</span>
         </div>
       </div>
     </div>

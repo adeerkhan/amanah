@@ -58,12 +58,12 @@ function makeDecision(action: RecommendedAction) {
   <div>
     <!-- Top bar -->
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
-      <NuxtLink to="/campaigns" style="font-size:12px;color:var(--c-text-secondary)">
-        ← Queue
+      <NuxtLink to="/campaigns" style="font-size:12px;color:var(--c-text-secondary);display:flex;align-items:center;gap:4px">
+        <Icon name="lucide:arrow-left" :size="14" /> Queue
       </NuxtLink>
       <div style="display:flex;align-items:center;gap:12px">
         <NuxtLink :to="`/campaigns/${campaign.id}/activity`" class="btn btn-secondary" style="font-size:11px;padding:5px 10px">
-          Activity ↗
+          <Icon name="lucide:activity" :size="12" /> Activity
         </NuxtLink>
         <span style="font-size:10px;color:var(--c-text-tertiary);letter-spacing:.08em">CASE {{ campaign.id.toUpperCase() }}</span>
       </div>
@@ -93,20 +93,27 @@ function makeDecision(action: RecommendedAction) {
         </span>
         <button class="btn btn-primary" :disabled="isLoading" @click="run">
           <span v-if="isLoading" style="width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .6s linear infinite" />
-          {{ isLoading ? 'Analyzing…' : output ? 'Run again' : 'Run AI review' }} {{ isLoading ? '' : '✦' }}
+          <Icon v-else name="lucide:sparkles" :size="14" />
+          {{ isLoading ? 'Analyzing…' : output ? 'Run again' : 'Run AI review' }}
         </button>
       </div>
     </div>
 
     <!-- Re-review banner -->
     <div v-if="workflow.uploaded" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--c-success-light);background:var(--c-success-light);border-radius:var(--radius-md);margin-bottom:20px">
-      <span style="width:28px;height:28px;border-radius:50%;background:white;display:grid;place-items:center;color:var(--c-success);font-size:14px;flex-shrink:0">↻</span>
+      <span style="width:28px;height:28px;border-radius:50%;background:white;display:grid;place-items:center;color:var(--c-success);flex-shrink:0">
+        <Icon name="lucide:refresh-cw" :size="14" />
+      </span>
       <div style="flex:1">
         <strong style="font-size:12px;color:var(--c-success-dark)">{{ workflow.rereviews ? `Re-review ${workflow.rereviews} complete` : 'New evidence ready for re-review' }}</strong>
         <small style="display:block;color:var(--c-text-secondary);font-size:11px">beneficiary_relationship_letter.pdf uploaded</small>
       </div>
-      <button v-if="!workflow.rereviews" class="btn btn-primary" @click="rereview(campaign)">Run re-review →</button>
-      <span v-else style="font-size:11px;color:var(--c-success);font-weight:600">Finding resolved ✓</span>
+      <button v-if="!workflow.rereviews" class="btn btn-primary" @click="rereview(campaign)">
+        <Icon name="lucide:refresh-cw" :size="12" /> Run re-review
+      </button>
+      <span v-else style="font-size:11px;color:var(--c-success);font-weight:600;display:flex;align-items:center;gap:4px">
+        <Icon name="lucide:check-circle" :size="12" /> Finding resolved
+      </span>
     </div>
 
     <!-- Main 3-column layout -->
@@ -174,7 +181,9 @@ function makeDecision(action: RecommendedAction) {
         <div class="panel" style="overflow:hidden">
           <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--c-border)">
             <div style="display:flex;gap:10px;align-items:center">
-              <span style="width:28px;height:28px;border-radius:var(--radius-sm);background:var(--c-accent-light);color:var(--c-accent);display:grid;place-items:center;font-size:13px">✦</span>
+              <span style="width:28px;height:28px;border-radius:var(--radius-sm);background:var(--c-accent-light);color:var(--c-accent);display:grid;place-items:center">
+                <Icon name="lucide:sparkles" :size="14" />
+              </span>
               <div>
                 <p class="eyebrow" style="margin:0 0 2px">Amanah analysis</p>
                 <h2 style="margin:0;font-size:16px;font-weight:600">Evidence review</h2>
@@ -188,12 +197,16 @@ function makeDecision(action: RecommendedAction) {
           </div>
 
           <div v-if="!output && !isLoading" style="padding:48px 24px;text-align:center">
-            <div style="width:44px;height:44px;border-radius:50%;background:var(--c-accent-light);color:var(--c-accent);display:grid;place-items:center;font-size:18px;margin:0 auto 14px">✦</div>
+            <div style="width:44px;height:44px;border-radius:50%;background:var(--c-accent-light);color:var(--c-accent);display:grid;place-items:center;margin:0 auto 14px">
+              <Icon name="lucide:sparkles" :size="20" />
+            </div>
             <h3 style="margin:0;font-size:16px">Ready to inspect this dossier</h3>
             <p style="margin:8px 0 18px;color:var(--c-text-secondary);font-size:12px;max-width:340px;margin-left:auto;margin-right:auto">
               Run the review to extract entities, compare sources, and retrieve the relevant operating policy.
             </p>
-            <button class="btn btn-primary" @click="run">Analyze campaign →</button>
+            <button class="btn btn-primary" @click="run">
+              <Icon name="lucide:play" :size="14" /> Analyze campaign
+            </button>
           </div>
 
           <div v-if="isLoading" style="padding:32px 24px">

@@ -47,7 +47,7 @@
       "label": "{ toasts, dismiss }",
       "file_type": "code",
       "source_file": "app/components/AppShell.vue",
-      "source_location": "L87",
+      "source_location": "L97",
       "_origin": "ast",
       "id": "app_components_appshell_toasts_dismiss",
       "community": 34,
@@ -3949,7 +3949,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/components/AppShell.vue",
-      "source_location": "L87",
+      "source_location": "L97",
       "weight": 1.0,
       "source": "app_components_appshell",
       "target": "app_components_appshell_toasts_dismiss",
@@ -7633,5 +7633,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "198bea984ca72c61c07977cf22e3fb409a67ea20"
+  "built_at_commit": "6085e72853820fa1db9ee6c547cd0fe0a80a3a29"
 }
